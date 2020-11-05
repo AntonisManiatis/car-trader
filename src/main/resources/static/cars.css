@@ -1,0 +1,21 @@
+@charset "ISO-8859-1";
+
+@media (min-width: 1200px) {
+    .container{
+        max-width: 1600px;
+    }
+}
+
+@media (min-width: 768px) {
+	.col-md-3 {
+		max-width: 20%;
+	}
+}
+
+#search {
+	width: 100%;
+}
+
+.ad-card-title {
+	display: block;
+}

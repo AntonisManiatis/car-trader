@@ -1,0 +1,22 @@
+@charset "ISO-8859-1";
+
+.jumbotron {
+	background-image: url(porsche_gt.png);
+   -webkit-background-size: cover;
+   -moz-background-size: cover;
+   background-size: cover;
+   -o-background-size: cover;
+   padding-bottom: 10%;
+}
+
+.carousel-control-prev, .carousel-control-next {
+	width: 10%;
+}
+
+.card-footer {
+	padding: 0.1rem;
+}
+
+.ad-card-title {
+	display: block;
+}

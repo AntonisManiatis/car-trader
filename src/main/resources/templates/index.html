@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+	    <meta charset="utf-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+		<link rel="stylesheet" href="index.css">
+		<title>Μεταχειρισμένα & Καινούρια Αυτοκίνητα - CarTrader.gr</title>
+	</head>
+	<body>
+		<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    	<script src="js/index.js"></script>
+    	<th:block th:insert="header"/>
+		<div class="jumbotron jumbotron-fluid">
+			<div class="ml-5">
+				<h1 class="display-4 text-white">Kαλωσήρθες!</h1>
+				<p class="lead text-white">Βρές το αυτοκίνητο που σου ταιριάζει στην μεγαλύτερη αγορά <br> για καινούρια και μεταχειρισμένα αυτοκίνητα στην Ελλάδα.</p>
+			</div>
+		</div>
+		<div class="container">
+			<h2>Τεράστια γκάμα αυτοκινήτων</h2>
+			<p class="lead">Αναζήτησε ανάμεσα σε <th:block th:text="${page.getTotalElements()}"></th:block> αγγελίες.</p>
+			<div id="ads" class="carousel slide" data-ride="carousel">
+				<div class="carousel-inner">
+					<div class="alert alert-primary text-center" role="alert" th:if="${partitions.empty}">
+						Δεν βρέθηκαν αποτελέσματα.
+					</div>
+					<div class="carousel-item" th:each="partition, iter: ${partitions}" th:classappend="${iter.count eq 1} ? 'active'">
+						<div class="card-deck mb-4">
+							<th:block th:each="ad: ${partition.ads}">
+								<th:block th:insert="ad-card (ad=${ad})"/>
+							</th:block>
+						</div>
+					</div>
+				</div>
+				<a class="carousel-control-prev" href="#ads" role="button" data-slide="prev">
+				   	<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+				   	<span class="sr-only">Previous</span>
+				</a>
+				<a class="carousel-control-next" href="#ads" role="button" data-slide="next">
+				   	<span class="carousel-control-next-icon" aria-hidden="true"></span>
+				   	<span class="sr-only">Next</span>
+				</a>
+			</div>
+			<p class="text-center"><strong><a th:href="@{/ads}">Δές όλες τις αγγελίες</a></strong></p>
+			<hr class="my-4">
+			<h2>Βρές το κατάλληλο αυτοκίνητα για σένα</h2>
+			<p>Διάλεξε το εύρος του ποσού που θέλεις να διαθέσεις.</p>
+			<form th:action="@{/ads}">
+				<div class="form-row">
+					<div class="form-group col-sm-3">
+						<label for="amount">Τιμή από:</label>
+						<input class="form-control" type="text" id="amount">
+					</div>
+					<div class="form-group col-sm-3">
+						<label for="amount">έως:</label>
+						<input class="form-control" type="text" id="amount">
+					</div>
+				</div>
+				<ul class="nav nav-tabs" id="myTab" role="tablist">
+				  	<li class="nav-item">
+				    	<a class="nav-link active" id="home-tab" data-toggle="tab" href="#categories" role="tab" aria-controls="categories" aria-selected="true">Κατηγορίες</a>
+				  	</li>
+				  	<li class="nav-item">
+				  		<a class="nav-link" id="profile-tab" data-toggle="tab" href="#makes" role="tab" aria-controls="profile" aria-selected="false">Μάρκες</a>
+				  	</li>
+				</ul>
+				<div class="tab-content" id="myTabContent">
+					<!-- https://stackoverflow.com/questions/30663562/use-images-like-checkboxes/30663705 -->
+					<div class="tab-pane fade show active" id="categories" role="tabpanel" aria-labelledby="home-tab">
+						<p class="lead">Βρες αυτοκίνητα βάση κατηγορίας.</p>
+						<script>
+							fillCategories();
+						</script>
+					</div>
+					<div class="tab-pane fade" id="makes" role="tabpanel" aria-labelledby="profile-tab">
+						<script>
+							fillMakes();
+						</script>
+						<p class="lead">Πάνω απο 30 μάρκες για να διαλέξεις!</p>
+						<div class="row">
+							<div class="col-md-6">
+								<img class="img-fluid" src="makes.jpeg">
+							</div>
+							<div class="col-md-6">
+								<div class="form-row">					    
+									<label for="make">Μάρκα</label>
+								    <select id="make" name="make" class="form-control">
+								      	<option selected>Οποιαδήποτε</option>
+								    </select>
+								    <label for="model">Μοντέλο</label>
+								    <select id="model" class="form-control">
+								       	<option selected>Οποιοδήποτε</option>
+								    </select>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<button type="submit" class="btn btn-outline-primary">Αναζήτησε</button>
+			</form>
+			<p class="mt-5 text-center">Ψάχνεις κάτι ποιό συγκεκριμένο; Δοκίμασε την <a th:href="@{/ads/search}">προχωρημένη αναζήτηση</a>.</p>
+			<hr class="my-4">
+			<div class="row">
+				<div class="col-md-6">
+					<h2>Θές να πουλήσεις το αυτοκίνητο σου;</h2>
+					<p class="lead">Καταχώρησε αγγελία εύκολα, γρήγορα και δωρεάν!</p>
+					<a class="btn btn-lg btn-outline-primary" th:href="@{/ads/create}">Καταχώρηση αγγελίας</a>
+				</div>
+				<div class="col-md-6">
+					<img class="img-fluid rounded" th:src="@{/exchange.jpg}"/>
+				</div>
+			</div>
+		</div>
+		<th:block th:insert="footer"/>
+	</body>
+</html>

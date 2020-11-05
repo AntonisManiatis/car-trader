@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<body>
+		<div class="card" th:fragment="ad-card (ad)">
+	    	<img class="card-img-top" th:if="${ad.pictures.empty}" th:src="default.png"/>
+	    	<th:block th:unless="${ad.pictures.empty}">
+	        	<img th:src="${ad.pictures[0].path}" class="card-img-top" alt="...">
+	    	</th:block>
+	        <div class="card-body">
+	        	<a class="ad-card-title stretched-link text-truncate" th:href="@{/ads/{id}(id=${ad.id})}">
+	        		<th:block th:text="${ad.title}"></th:block>
+	        	</a>
+	        </div>
+	    </div>
+	</body>
+</html>
