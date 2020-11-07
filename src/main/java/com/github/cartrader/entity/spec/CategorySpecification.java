@@ -25,6 +25,6 @@ public final class CategorySpecification implements Specification<Ad> {
 	
 	@Override
 	public Predicate toPredicate(Root<Ad> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
-		return cb.equal(root.get("category"), category);
+		return cb.equal(root.get("car").get("category"), category);
 	}
 }

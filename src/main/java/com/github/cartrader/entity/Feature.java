@@ -16,6 +16,7 @@ public class Feature {
 	private int id;
 	
 	private String name;
+	private FeatureType type = FeatureType.OTHER;
 	
 	public Feature(int id, String name) {
 		this.id = id;
@@ -40,5 +41,13 @@ public class Feature {
 	
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public FeatureType getType() {
+		return type;
+	}
+
+	public void setType(FeatureType type) {
+		this.type = type;
 	}
 }

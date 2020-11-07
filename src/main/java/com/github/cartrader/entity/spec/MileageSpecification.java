@@ -20,6 +20,6 @@ public final class MileageSpecification implements Specification<Ad> {
 	
 	@Override
 	public Predicate toPredicate(Root<Ad> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
-		return cb.lessThanOrEqualTo(root.get("mileage"), mileage);
+		return cb.lessThanOrEqualTo(root.get("car").get("mileage"), mileage);
 	}
 }

@@ -21,6 +21,6 @@ public final class ConditionSpecification implements Specification<Ad>{
 	
 	@Override
 	public Predicate toPredicate(Root<Ad> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
-		return cb.equal(root.get("carCondition"), this.condition);
+		return cb.equal(root.get("car").get("carCondition"), this.condition);
 	}
 }

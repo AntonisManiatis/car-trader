@@ -20,6 +20,6 @@ public final class ToYearSpecification implements Specification<Ad> {
 	
 	@Override
 	public Predicate toPredicate(Root<Ad> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
-		return cb.lessThanOrEqualTo(root.get("modelYear"), year);
+		return cb.lessThanOrEqualTo(root.get("car").get("modelYear"), year);
 	}
 }

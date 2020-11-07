@@ -1,6 +1,13 @@
 package com.github.cartrader.entity;
 
+import java.time.LocalDate;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Embeddable;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 @Embeddable
 public class Car {
@@ -9,6 +16,98 @@ public class Car {
 	private DrivetrainType drivetrain = DrivetrainType.UNDEFINED;
 	private TransmissionType transmition = TransmissionType.UNDEFINED;
 	
+	@OneToOne(cascade = CascadeType.PERSIST)
+	@JoinColumn(name="makeId", referencedColumnName="id")
+	private Make make;
+	
+	@OneToOne(cascade = CascadeType.PERSIST)
+	@JoinColumn(name="categoryId", referencedColumnName="id")
+	private Category category;
+	private LocalDate modelYear;
+	
+	@OneToMany
+	private Set<Feature> features = Set.of();
+	
 	private int doors;
 	private int sits;
+	
+	public CarCondition getCondition() {
+		return carCondition;
+	}
+	
+	public void setCarCondition(CarCondition condition) {
+		this.carCondition = condition;
+	}
+
+	public EngineDetails getDetails() {
+		return details;
+	}
+
+	public void setDetails(EngineDetails details) {
+		this.details = details;
+	}
+
+	public DrivetrainType getDrivetrain() {
+		return drivetrain;
+	}
+
+	public void setDrivetrain(DrivetrainType drivetrain) {
+		this.drivetrain = drivetrain;
+	}
+
+	public TransmissionType getTransmition() {
+		return transmition;
+	}
+
+	public void setTransmition(TransmissionType transmition) {
+		this.transmition = transmition;
+	}
+
+	public Make getMake() {
+		return make;
+	}
+
+	public void setMake(Make make) {
+		this.make = make;
+	}
+
+	public Category getCategory() {
+		return category;
+	}
+
+	public void setCategory(Category category) {
+		this.category = category;
+	}
+
+	public LocalDate getModelYear() {
+		return modelYear;
+	}
+
+	public void setModelYear(LocalDate modelYear) {
+		this.modelYear = modelYear;
+	}
+
+	public Set<Feature> getFeatures() {
+		return features;
+	}
+
+	public void setFeatures(Set<Feature> features) {
+		this.features = features;
+	}
+
+	public int getDoors() {
+		return doors;
+	}
+
+	public void setDoors(int doors) {
+		this.doors = doors;
+	}
+
+	public int getSits() {
+		return sits;
+	}
+
+	public void setSits(int sits) {
+		this.sits = sits;
+	}
 }

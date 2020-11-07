@@ -20,6 +20,6 @@ public final class MaxPriceSpecification implements Specification<Ad> {
 	
 	@Override
 	public Predicate toPredicate(Root<Ad> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
-		return cb.lessThan(root.get("price"), price);
+		return cb.lessThan(root.get("car").get("price"), price);
 	}
 }

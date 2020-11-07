@@ -11,6 +11,8 @@ import com.github.cartrader.entity.Ad;
 import com.github.cartrader.entity.AdPurpose;
 
 public final class AdPurposeSpecification implements Specification<Ad> {
+	private static final long serialVersionUID = 9014537535439721948L;
+	
 	private final AdPurpose purpose;
 	
 	public AdPurposeSpecification(AdPurpose purpose) {

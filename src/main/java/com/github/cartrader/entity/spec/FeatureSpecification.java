@@ -8,8 +8,13 @@ import javax.persistence.criteria.Root;
 import org.springframework.data.jpa.domain.Specification;
 
 import com.github.cartrader.entity.Ad;
+import com.github.cartrader.entity.Car;
 import com.github.cartrader.entity.Feature;
 
+/**
+ * 
+ * @author Anthony
+ */
 public final class FeatureSpecification implements Specification<Ad> {
 	private static final long serialVersionUID = 9111867821418149189L;
 	
@@ -21,7 +26,8 @@ public final class FeatureSpecification implements Specification<Ad> {
 	
 	@Override
 	public Predicate toPredicate(Root<Ad> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
-		var featureJoin = root.<Feature, Ad>join("features");
-		return cb.equal(featureJoin.get(""), feature);
+		var carJoin = root.<Feature, Car>join("car");
+		var featureJoin = carJoin.join("features");
+		return cb.equal(featureJoin.get("id"), feature.getId());
 	}
 }

@@ -20,6 +20,6 @@ public final class MaxEngineSizeSpecification implements Specification<Ad> {
 
 	@Override
 	public Predicate toPredicate(Root<Ad> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
-		return cb.lessThanOrEqualTo(root.get("engineSize"), engineSize);
+		return cb.lessThanOrEqualTo(root.get("car").get("engineSize"), engineSize);
 	}
 }
