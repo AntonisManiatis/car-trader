@@ -4,6 +4,7 @@
 	    <meta charset="utf-8">
 	    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+		<link rel="stylesheet" type="text/css" th:href="@{/css/flaticon.css}">
 		<title>Μεταχειρισμένα & Καινούρια Αυτοκίνητα - CarTrader.gr</title>
 	</head>
 	<body>
@@ -21,329 +22,367 @@
 						<button class="btn btn-danger float-right" type="reset">Clear</button>
 					</div>
 				</div>
-				<h5>Κατάσταση</h5>
+				<fieldset class="form-group">
+					<legend>Κατάσταση</legend>
+					<div class="form-row">
+						<div class="col-md-3">
+							<div class="form-check">
+								<input id="new" name="condition" value="NEW" class="form-check-input" type="checkbox" th:checked="${criteria.conditions.contains(T(com.github.cartrader.entity.CarCondition).NEW)}"/>
+								<label class="form-check-label" for="new">Καινούριο</label>
+							</div>
+						</div>
+						<div class="col-md-3">
+							<div class="form-check">
+								<input id="used" name="condition" value="USED" class="form-check-input" type="checkbox" th:checked="${criteria.conditions.contains(T(com.github.cartrader.entity.CarCondition).USED)}"/>
+								<label class="form-check-label" for="used">Μεταχειρισμένο</label>
+							</div>
+						</div>
+					</div>
+				</fieldset>
+				<fieldset class="form-group">
+					<legend>Τύπος αγγελίας</legend>
+					<div class="form-row">
+						<div class="col-md-3">
+							<div class="form-check">
+								<input id="rent" name="purpose" type="checkbox" value="RENT" class="form-check-input" th:checked="${criteria.purposes.contains(T(com.github.cartrader.entity.
+								AdPurpose).RENT)}"/>
+								<label class="form-check-label">Ενοικιάζεται</label>
+							</div>
+						</div>
+						<div class="col-md-3">
+							<div class="form-check">
+								<input id="buy" name="purpose" type="checkbox" value="BUY" class="form-check-input" th:checked="${criteria.purposes.contains(T(com.github.cartrader.entity.
+								AdPurpose).BUY)}"/>
+								<label class="form-check-label">Ζητείται</label>
+							</div>
+						</div>
+						<div class="col-md-3">
+							<div class="form-check">
+								<input id="sell" name="purpose" type="checkbox" value="SELL" class="form-check-input" th:checked="${criteria.purposes.contains(T(com.github.cartrader.entity.
+								AdPurpose).SELL)}"/>
+								<label class="form-check-label">Πωλείται</label>
+							</div>
+						</div>
+					</div>
+				</fieldset>
+				<fieldset class="form-group">
+					<legend>Κατηγορίες</legend>
+					<div class="form-row">
+						<script>
+							fillCategories();
+						</script>
+						<div id="categories"></div>
+					</div>
+				</fieldset>
+				<fieldset class="form-group">
+					<div class="form-row">
+						<script>
+							fillMakes();
+						</script>
+						<div class="col-md-4">
+						    <label for="make">Μάρκα</label>
+						    <select id="make" name="make" class="form-control">
+						        <option disabled selected>Οποιαδήποτε</option>
+						    </select>
+						</div>
+						<div class="col-md-4">
+						    <label for="model">Μοντέλο</label>
+						    <select id="model" class="form-control">
+						       	<option selected>Οποιοδήποτε</option>
+						    </select>
+						</div>
+					</div>
+				</fieldset>
 				<div class="form-row">
-					<div class="col-md-3">
-						<div class="form-check">
-							<input id="new" name="condition" value="NEW" class="form-check-input" type="checkbox" th:checked="${criteria.conditions.contains(T(com.github.cartrader.entity.CarCondition).NEW)}"/>
-							<label class="form-check-label" for="new">Καινούριο</label>
-						</div>
+					<div class="col-4">
+						<fieldset class="form-group">
+							<legend>Τιμή</legend>
+							<div class="form-row">
+								<div class="col">
+								    <select name="priceMin" class="form-control">
+								        <option disabled selected>Οποιαδήποτε</option>
+								        <option value="0" th:selected="${criteria.priceMin eq 0}">0 &euro;</option>
+								        <option value="50" th:selected="${criteria.priceMin eq 50}">50 &euro;</option>
+								        <option value="100" th:selected="${criteria.priceMin eq 100}">100 &euro;</option>
+								        <option value="500" th:selected="${criteria.priceMin eq 500}">500 &euro;</option>
+								        <option value="1000" th:selected="${criteria.priceMin eq 1000}">1000 &euro;</option>
+								        <option value="1500" th:selected="${criteria.priceMin eq 1500}">1500 &euro;</option>
+								        <option value="2000" th:selected="${criteria.priceMin eq 2000}">2000 &euro;</option>
+								        <option value="2500" th:selected="${criteria.priceMin eq 2500}">2500 &euro;</option>
+								        <option value="3000" th:selected="${criteria.priceMin eq 3000}">3000 &euro;</option>
+								        <option value="3500" th:selected="${criteria.priceMin eq 3500}">3500 &euro;</option>
+								        <option value="4000" th:selected="${criteria.priceMin eq 4000}">4000 &euro;</option>
+								        <option value="4500" th:selected="${criteria.priceMin eq 4500}">4500 &euro;</option>
+								        <option value="5000" th:selected="${criteria.priceMin eq 5000}">5000 &euro;</option>
+								        <option value="6000" th:selected="${criteria.priceMin eq 6000}">6000 &euro;</option>
+								        <option value="7000" th:selected="${criteria.priceMin eq 7000}">7000 &euro;</option>
+								        <option value="8000" th:selected="${criteria.priceMin eq 8000}">8000 &euro;</option>
+								        <option value="9000" th:selected="${criteria.priceMin eq 9000}">9000 &euro;</option>
+								        <option value="10000" th:selected="${criteria.priceMin eq 10000}">10000 &euro;</option>
+								        <option value="11000" th:selected="${criteria.priceMin eq 11000}">11000 &euro;</option>
+								        <option value="12000" th:selected="${criteria.priceMin eq 12000}">12000 &euro;</option>
+								        <option value="13000" th:selected="${criteria.priceMin eq 13000}">13000 &euro;</option>
+								        <option value="14000" th:selected="${criteria.priceMin eq 14000}">14000 &euro;</option>
+								        <option value="15000" th:selected="${criteria.priceMin eq 15000}">15000 &euro;</option>
+								        <option value="20000" th:selected="${criteria.priceMin eq 20000}">20000 &euro;</option>
+								        <option value="25000" th:selected="${criteria.priceMin eq 25000}">25000 &euro;</option>
+								        <option value="30000" th:selected="${criteria.priceMin eq 30000}">30000 &euro;</option>
+								        <option value="35000" th:selected="${criteria.priceMin eq 35000}">35000 &euro;</option>
+								        <option value="40000" th:selected="${criteria.priceMin eq 40000}">40000 &euro;</option>
+								        <option value="45000" th:selected="${criteria.priceMin eq 45000}">45000 &euro;</option>
+								        <option value="50000" th:selected="${criteria.priceMin eq 50000}">50000 &euro;</option>
+								        <option value="75000" th:selected="${criteria.priceMin eq 75000}">75000 &euro;</option>
+								        <option value="100000" th:selected="${criteria.priceMin eq 100000}">100000 &euro;</option>
+								        <option value="125000" th:selected="${criteria.priceMin eq 125000}">125000 &euro;</option>
+								        <option value="150000" th:selected="${criteria.priceMin eq 150000}">150000 &euro;</option>
+								        <option value="175000" th:selected="${criteria.priceMin eq 175000}">175000+ &euro;</option>
+								    </select>
+								</div>
+								<div class="col">
+								    <select name="priceMax" class="form-control">
+								        <option disabled selected>Οποιαδήποτε</option>
+								      	<option value="0" th:selected="${criteria.priceMax eq 0}">0 &euro;</option>
+								        <option value="50" th:selected="${criteria.priceMax eq 50}">50 &euro;</option>
+								        <option value="100" th:selected="${criteria.priceMax eq 100}">100 &euro;</option>
+								        <option value="500" th:selected="${criteria.priceMax eq 500}">500 &euro;</option>
+								        <option value="1000" th:selected="${criteria.priceMax eq 1000}">1000 &euro;</option>
+								        <option value="1500" th:selected="${criteria.priceMax eq 1500}">1500 &euro;</option>
+								        <option value="2000" th:selected="${criteria.priceMax eq 2000}">2000 &euro;</option>
+								        <option value="2500" th:selected="${criteria.priceMax eq 2500}">2500 &euro;</option>
+								        <option value="3000" th:selected="${criteria.priceMax eq 3000}">3000 &euro;</option>
+								        <option value="3500" th:selected="${criteria.priceMax eq 3500}">3500 &euro;</option>
+								        <option value="4000" th:selected="${criteria.priceMax eq 4000}">4000 &euro;</option>
+								        <option value="4500" th:selected="${criteria.priceMax eq 4500}">4500 &euro;</option>
+								        <option value="5000" th:selected="${criteria.priceMax eq 5000}">5000 &euro;</option>
+								        <option value="6000" th:selected="${criteria.priceMax eq 6000}">6000 &euro;</option>
+								        <option value="7000" th:selected="${criteria.priceMax eq 7000}">7000 &euro;</option>
+								        <option value="8000" th:selected="${criteria.priceMax eq 8000}">8000 &euro;</option>
+								        <option value="9000" th:selected="${criteria.priceMax eq 9000}">9000 &euro;</option>
+								        <option value="10000" th:selected="${criteria.priceMax eq 10000}">10000 &euro;</option>
+								        <option value="11000" th:selected="${criteria.priceMax eq 11000}">11000 &euro;</option>
+								        <option value="12000" th:selected="${criteria.priceMax eq 12000}">12000 &euro;</option>
+								        <option value="13000" th:selected="${criteria.priceMax eq 13000}">13000 &euro;</option>
+								        <option value="14000" th:selected="${criteria.priceMax eq 14000}">14000 &euro;</option>
+								        <option value="15000" th:selected="${criteria.priceMax eq 15000}">15000 &euro;</option>
+								        <option value="20000" th:selected="${criteria.priceMax eq 20000}">20000 &euro;</option>
+								        <option value="25000" th:selected="${criteria.priceMax eq 25000}">25000 &euro;</option>
+								        <option value="30000" th:selected="${criteria.priceMax eq 30000}">30000 &euro;</option>
+								        <option value="35000" th:selected="${criteria.priceMax eq 35000}">35000 &euro;</option>
+								        <option value="40000" th:selected="${criteria.priceMax eq 40000}">40000 &euro;</option>
+								        <option value="45000" th:selected="${criteria.priceMax eq 45000}">45000 &euro;</option>
+								        <option value="50000" th:selected="${criteria.priceMax eq 50000}">50000 &euro;</option>
+								        <option value="75000" th:selected="${criteria.priceMax eq 75000}">75000 &euro;</option>
+								        <option value="100000" th:selected="${criteria.priceMax eq 100000}">100000 &euro;</option>
+								        <option value="125000" th:selected="${criteria.priceMax eq 125000}">125000 &euro;</option>
+								        <option value="150000" th:selected="${criteria.priceMax eq 150000}">150000 &euro;</option>
+								        <option value="175000" th:selected="${criteria.priceMax eq 175000}">175000+ &euro;</option>
+								    </select>
+								</div>
+							</div>
+						</fieldset>
 					</div>
-					<div class="col-md-3">
-						<div class="form-check">
-							<input id="used" name="condition" value="USED" class="form-check-input" type="checkbox" th:checked="${criteria.conditions.contains(T(com.github.cartrader.entity.CarCondition).USED)}"/>
-							<label class="form-check-label" for="used">Μεταχειρισμένο</label>
-						</div>
-					</div>
-				</div>
-				<h5>Τύπος αγγελίας</h5>
-				<div class="form-row">
-					<div class="col-md-3">
-						<div class="form-check">
-							<input id="rent" name="purpose" type="checkbox" value="RENT" class="form-check-input" th:checked="${criteria.purposes.contains(T(com.github.cartrader.entity.
-							AdPurpose).RENT)}"/>
-							<label class="form-check-label">Ενοικιάζεται</label>
-						</div>
-					</div>
-					<div class="col-md-3">
-						<div class="form-check">
-							<input id="buy" name="purpose" type="checkbox" value="BUY" class="form-check-input" th:checked="${criteria.purposes.contains(T(com.github.cartrader.entity.
-							AdPurpose).BUY)}"/>
-							<label class="form-check-label">Ζητείται</label>
-						</div>
-					</div>
-					<div class="col-md-3">
-						<div class="form-check">
-							<input id="sell" name="purpose" type="checkbox" value="SELL" class="form-check-input" th:checked="${criteria.purposes.contains(T(com.github.cartrader.entity.
-							AdPurpose).SELL)}"/>
-							<label class="form-check-label">Πωλείται</label>
-						</div>
-					</div>
-				</div>
-				<h5>Κατηγορίες</h5>
-				<div class="form-row">
-					<script>
-						fillCategories();
-					</script>
-					<div id="categories"></div>
-				</div>
-				<div class="form-row">
-					<script>
-						fillMakes();
-					</script>
-					<div class="col-md-4">
-					    <label for="make">Μάρκα</label>
-					    <select id="make" name="make" class="form-control">
-					        <option disabled selected>Οποιαδήποτε</option>
-					    </select>
-					</div>
-					<div class="col-md-4">
-					    <label for="model">Μοντέλο</label>
-					    <select id="model" class="form-control">
-					       	<option selected>Οποιοδήποτε</option>
-					    </select>
+					<div class="col-4">
+						<fieldset class="form-group">
+							<legend>Χρονολογία</legend>
+							<div class="form-row">
+								<div class="col">
+								    <select name="yearFrom" class="form-control">
+								        <option disabled selected>Οποιαδήποτε</option>
+								        <option value="2021" th:selected="${criteria.yearFrom eq 2021}">2021</option>
+								        <option value="2020" th:selected="${criteria.yearFrom eq 2020}">2020</option>
+								        <option value="2019" th:selected="${criteria.yearFrom eq 2019}">2019</option>
+								        <option value="2018" th:selected="${criteria.yearFrom eq 2018}">2018</option>
+								        <option value="2017" th:selected="${criteria.yearFrom eq 2017}">2017</option>
+										<option value="2016" th:selected="${criteria.yearFrom eq 2016}">2016</option>
+										<option value="2015" th:selected="${criteria.yearFrom eq 2015}">2015</option>
+										<option value="2014" th:selected="${criteria.yearFrom eq 2014}">2014</option>
+										<option value="2013" th:selected="${criteria.yearFrom eq 2013}">2013</option>
+										<option value="2012" th:selected="${criteria.yearFrom eq 2012}">2012</option>
+										<option value="2011" th:selected="${criteria.yearFrom eq 2011}">2011</option>
+										<option value="2010" th:selected="${criteria.yearFrom eq 2010}">2010</option>
+										<option value="2009" th:selected="${criteria.yearFrom eq 2009}">2009</option>
+										<option value="2008" th:selected="${criteria.yearFrom eq 2008}">2008</option>
+										<option value="2007" th:selected="${criteria.yearFrom eq 2007}">2007</option>
+										<option value="2006" th:selected="${criteria.yearFrom eq 2006}">2006</option>
+										<option value="2005" th:selected="${criteria.yearFrom eq 2005}">2005</option>
+										<option value="2004" th:selected="${criteria.yearFrom eq 2004}">2004</option>
+										<option value="2003" th:selected="${criteria.yearFrom eq 2003}">2003</option>
+										<option value="2002" th:selected="${criteria.yearFrom eq 2002}">2002</option>
+										<option value="2001" th:selected="${criteria.yearFrom eq 2001}">2001</option>
+										<option value="2000" th:selected="${criteria.yearFrom eq 2000}">2000</option>
+										<option value="1999" th:selected="${criteria.yearFrom eq 1999}">1999</option>
+										<option value="1998" th:selected="${criteria.yearFrom eq 1998}">1998</option>
+										<option value="1997" th:selected="${criteria.yearFrom eq 1997}">1997</option>
+										<option value="1996" th:selected="${criteria.yearFrom eq 1996}">1996</option>
+										<option value="1995" th:selected="${criteria.yearFrom eq 1995}">1995</option>
+										<option value="1994" th:selected="${criteria.yearFrom eq 1994}">1994</option>
+										<option value="1993" th:selected="${criteria.yearFrom eq 1993}">1993</option>
+										<option value="1992" th:selected="${criteria.yearFrom eq 1992}">1992</option>
+										<option value="1991" th:selected="${criteria.yearFrom eq 1991}">1991</option>
+										<option value="1990" th:selected="${criteria.yearFrom eq 1990}">1990</option>
+										<option value="1985" th:selected="${criteria.yearFrom eq 1985}">1985</option>
+										<option value="1980" th:selected="${criteria.yearFrom eq 1980}">1980</option>
+										<option value="1975" th:selected="${criteria.yearFrom eq 1975}">1975</option>
+										<option value="1970" th:selected="${criteria.yearFrom eq 1970}">1970</option>
+										<option value="1965" th:selected="${criteria.yearFrom eq 1965}">1965</option>
+										<option value="1960" th:selected="${criteria.yearFrom eq 1960}">1960</option>
+										<option value="1900" th:selected="${criteria.yearFrom eq 1900}">1900</option>
+								    </select>
+								</div>
+								<div class="col">
+								    <select name="yearTo" class="form-control">
+								       	<option disabled selected>Οποιοδήποτε</option>
+								       	<option value="2021" th:selected="${criteria.yearTo eq 2021}">2021</option>
+								        <option value="2020" th:selected="${criteria.yearTo eq 2020}">2020</option>
+								        <option value="2019" th:selected="${criteria.yearTo eq 2019}">2019</option>
+								        <option value="2018" th:selected="${criteria.yearTo eq 2018}">2018</option>
+								        <option value="2017" th:selected="${criteria.yearTo eq 2017}">2017</option>
+										<option value="2016" th:selected="${criteria.yearTo eq 2016}">2016</option>
+										<option value="2015" th:selected="${criteria.yearTo eq 2015}">2015</option>
+										<option value="2014" th:selected="${criteria.yearTo eq 2014}">2014</option>
+										<option value="2013" th:selected="${criteria.yearTo eq 2013}">2013</option>
+										<option value="2012" th:selected="${criteria.yearTo eq 2012}">2012</option>
+										<option value="2011" th:selected="${criteria.yearTo eq 2011}">2011</option>
+										<option value="2010" th:selected="${criteria.yearTo eq 2010}">2010</option>
+										<option value="2009" th:selected="${criteria.yearTo eq 2009}">2009</option>
+										<option value="2008" th:selected="${criteria.yearTo eq 2008}">2008</option>
+										<option value="2007" th:selected="${criteria.yearTo eq 2007}">2007</option>
+										<option value="2006" th:selected="${criteria.yearTo eq 2006}">2006</option>
+										<option value="2005" th:selected="${criteria.yearTo eq 2005}">2005</option>
+										<option value="2004" th:selected="${criteria.yearTo eq 2004}">2004</option>
+										<option value="2003" th:selected="${criteria.yearTo eq 2003}">2003</option>
+										<option value="2002" th:selected="${criteria.yearTo eq 2002}">2002</option>
+										<option value="2001" th:selected="${criteria.yearTo eq 2001}">2001</option>
+										<option value="2000" th:selected="${criteria.yearTo eq 2000}">2000</option>
+										<option value="1999" th:selected="${criteria.yearTo eq 1999}">1999</option>
+										<option value="1998" th:selected="${criteria.yearTo eq 1998}">1998</option>
+										<option value="1997" th:selected="${criteria.yearTo eq 1997}">1997</option>
+										<option value="1996" th:selected="${criteria.yearTo eq 1996}">1996</option>
+										<option value="1995" th:selected="${criteria.yearTo eq 1995}">1995</option>
+										<option value="1994" th:selected="${criteria.yearTo eq 1994}">1994</option>
+										<option value="1993" th:selected="${criteria.yearTo eq 1993}">1993</option>
+										<option value="1992" th:selected="${criteria.yearTo eq 1992}">1992</option>
+										<option value="1991" th:selected="${criteria.yearTo eq 1991}">1991</option>
+										<option value="1990" th:selected="${criteria.yearTo eq 1990}">1990</option>
+										<option value="1985" th:selected="${criteria.yearTo eq 1985}">1985</option>
+										<option value="1980" th:selected="${criteria.yearTo eq 1980}">1980</option>
+										<option value="1975" th:selected="${criteria.yearTo eq 1975}">1975</option>
+										<option value="1970" th:selected="${criteria.yearTo eq 1970}">1970</option>
+										<option value="1965" th:selected="${criteria.yearTo eq 1965}">1965</option>
+										<option value="1960" th:selected="${criteria.yearTo eq 1960}">1960</option>
+										<option value="1900" th:selected="${criteria.yearTo eq 1900}">1900</option>
+								    </select>
+								</div>
+							</div>
+						</fieldset>
 					</div>
 				</div>
 				<div class="form-row">
 					<div class="col-4">
-						<h5>Τιμή</h5>
-						<div class="form-row">
-							<div class="col">
-							    <select name="priceMin" class="form-control">
-							        <option disabled selected>Οποιαδήποτε</option>
-							        <option value="0" th:selected="${criteria.priceMin eq 0}">0 &euro;</option>
-							        <option value="50" th:selected="${criteria.priceMin eq 50}">50 &euro;</option>
-							        <option value="100" th:selected="${criteria.priceMin eq 100}">100 &euro;</option>
-							        <option value="500" th:selected="${criteria.priceMin eq 500}">500 &euro;</option>
-							        <option value="1000" th:selected="${criteria.priceMin eq 1000}">1000 &euro;</option>
-							        <option value="1500" th:selected="${criteria.priceMin eq 1500}">1500 &euro;</option>
-							        <option value="2000" th:selected="${criteria.priceMin eq 2000}">2000 &euro;</option>
-							        <option value="2500" th:selected="${criteria.priceMin eq 2500}">2500 &euro;</option>
-							        <option value="3000" th:selected="${criteria.priceMin eq 3000}">3000 &euro;</option>
-							        <option value="3500" th:selected="${criteria.priceMin eq 3500}">3500 &euro;</option>
-							        <option value="4000" th:selected="${criteria.priceMin eq 4000}">4000 &euro;</option>
-							        <option value="4500" th:selected="${criteria.priceMin eq 4500}">4500 &euro;</option>
-							        <option value="5000" th:selected="${criteria.priceMin eq 5000}">5000 &euro;</option>
-							        <option value="6000" th:selected="${criteria.priceMin eq 6000}">6000 &euro;</option>
-							        <option value="7000" th:selected="${criteria.priceMin eq 7000}">7000 &euro;</option>
-							        <option value="8000" th:selected="${criteria.priceMin eq 8000}">8000 &euro;</option>
-							        <option value="9000" th:selected="${criteria.priceMin eq 9000}">9000 &euro;</option>
-							        <option value="10000" th:selected="${criteria.priceMin eq 10000}">10000 &euro;</option>
-							        <option value="11000" th:selected="${criteria.priceMin eq 11000}">11000 &euro;</option>
-							        <option value="12000" th:selected="${criteria.priceMin eq 12000}">12000 &euro;</option>
-							        <option value="13000" th:selected="${criteria.priceMin eq 13000}">13000 &euro;</option>
-							        <option value="14000" th:selected="${criteria.priceMin eq 14000}">14000 &euro;</option>
-							        <option value="15000" th:selected="${criteria.priceMin eq 15000}">15000 &euro;</option>
-							        <option value="20000" th:selected="${criteria.priceMin eq 20000}">20000 &euro;</option>
-							        <option value="25000" th:selected="${criteria.priceMin eq 25000}">25000 &euro;</option>
-							        <option value="30000" th:selected="${criteria.priceMin eq 30000}">30000 &euro;</option>
-							        <option value="35000" th:selected="${criteria.priceMin eq 35000}">35000 &euro;</option>
-							        <option value="40000" th:selected="${criteria.priceMin eq 40000}">40000 &euro;</option>
-							        <option value="45000" th:selected="${criteria.priceMin eq 45000}">45000 &euro;</option>
-							        <option value="50000" th:selected="${criteria.priceMin eq 50000}">50000 &euro;</option>
-							        <option value="75000" th:selected="${criteria.priceMin eq 75000}">75000 &euro;</option>
-							        <option value="100000" th:selected="${criteria.priceMin eq 100000}">100000 &euro;</option>
-							        <option value="125000" th:selected="${criteria.priceMin eq 125000}">125000 &euro;</option>
-							        <option value="150000" th:selected="${criteria.priceMin eq 150000}">150000 &euro;</option>
-							        <option value="175000" th:selected="${criteria.priceMin eq 175000}">175000+ &euro;</option>
-							    </select>
+						<fieldset class="form-group">
+							<legend>Χιλιόμετρα</legend>
+							<div class="form-row">
+								<div class="col">
+									<select name="mileage" class="form-control">
+								        <option disabled selected>Οποιαδήποτε</option>
+								        <option value="0" th:selected="${criteria.priceMin eq 0}">0 χλμ</option>
+								        <option value="1000" th:selected="${criteria.mileage eq 1000}">1000 χλμ και κάτω</option>
+								        <option value="3000" th:selected="${criteria.mileage eq 3000}">3000 χλμ και κάτω</option>
+								        <option value="5000" th:selected="${criteria.mileage eq 5000}">5000 χλμ και κάτω</option>
+								        <option value="10000" th:selected="${criteria.mileage eq 10000}">10000 χλμ και κάτω</option>
+								        <option value="15000" th:selected="${criteria.mileage eq 15000}">15000 χλμ και κάτω</option>
+								    </select>
+								</div>
 							</div>
-							<div class="col">
-							    <select name="priceMax" class="form-control">
-							        <option disabled selected>Οποιαδήποτε</option>
-							      	<option value="0" th:selected="${criteria.priceMax eq 0}">0 &euro;</option>
-							        <option value="50" th:selected="${criteria.priceMax eq 50}">50 &euro;</option>
-							        <option value="100" th:selected="${criteria.priceMax eq 100}">100 &euro;</option>
-							        <option value="500" th:selected="${criteria.priceMax eq 500}">500 &euro;</option>
-							        <option value="1000" th:selected="${criteria.priceMax eq 1000}">1000 &euro;</option>
-							        <option value="1500" th:selected="${criteria.priceMax eq 1500}">1500 &euro;</option>
-							        <option value="2000" th:selected="${criteria.priceMax eq 2000}">2000 &euro;</option>
-							        <option value="2500" th:selected="${criteria.priceMax eq 2500}">2500 &euro;</option>
-							        <option value="3000" th:selected="${criteria.priceMax eq 3000}">3000 &euro;</option>
-							        <option value="3500" th:selected="${criteria.priceMax eq 3500}">3500 &euro;</option>
-							        <option value="4000" th:selected="${criteria.priceMax eq 4000}">4000 &euro;</option>
-							        <option value="4500" th:selected="${criteria.priceMax eq 4500}">4500 &euro;</option>
-							        <option value="5000" th:selected="${criteria.priceMax eq 5000}">5000 &euro;</option>
-							        <option value="6000" th:selected="${criteria.priceMax eq 6000}">6000 &euro;</option>
-							        <option value="7000" th:selected="${criteria.priceMax eq 7000}">7000 &euro;</option>
-							        <option value="8000" th:selected="${criteria.priceMax eq 8000}">8000 &euro;</option>
-							        <option value="9000" th:selected="${criteria.priceMax eq 9000}">9000 &euro;</option>
-							        <option value="10000" th:selected="${criteria.priceMax eq 10000}">10000 &euro;</option>
-							        <option value="11000" th:selected="${criteria.priceMax eq 11000}">11000 &euro;</option>
-							        <option value="12000" th:selected="${criteria.priceMax eq 12000}">12000 &euro;</option>
-							        <option value="13000" th:selected="${criteria.priceMax eq 13000}">13000 &euro;</option>
-							        <option value="14000" th:selected="${criteria.priceMax eq 14000}">14000 &euro;</option>
-							        <option value="15000" th:selected="${criteria.priceMax eq 15000}">15000 &euro;</option>
-							        <option value="20000" th:selected="${criteria.priceMax eq 20000}">20000 &euro;</option>
-							        <option value="25000" th:selected="${criteria.priceMax eq 25000}">25000 &euro;</option>
-							        <option value="30000" th:selected="${criteria.priceMax eq 30000}">30000 &euro;</option>
-							        <option value="35000" th:selected="${criteria.priceMax eq 35000}">35000 &euro;</option>
-							        <option value="40000" th:selected="${criteria.priceMax eq 40000}">40000 &euro;</option>
-							        <option value="45000" th:selected="${criteria.priceMax eq 45000}">45000 &euro;</option>
-							        <option value="50000" th:selected="${criteria.priceMax eq 50000}">50000 &euro;</option>
-							        <option value="75000" th:selected="${criteria.priceMax eq 75000}">75000 &euro;</option>
-							        <option value="100000" th:selected="${criteria.priceMax eq 100000}">100000 &euro;</option>
-							        <option value="125000" th:selected="${criteria.priceMax eq 125000}">125000 &euro;</option>
-							        <option value="150000" th:selected="${criteria.priceMax eq 150000}">150000 &euro;</option>
-							        <option value="175000" th:selected="${criteria.priceMax eq 175000}">175000+ &euro;</option>
-							    </select>
-							</div>
-						</div>
+						</fieldset>
 					</div>
 					<div class="col-4">
-						<h5>Χρονολογία</h5>
-						<div class="form-row">
-							<div class="col">
-							    <select name="yearFrom" class="form-control">
-							        <option disabled selected>Οποιαδήποτε</option>
-							        <option value="2021" th:selected="${criteria.yearFrom eq 2021}">2021</option>
-							        <option value="2020" th:selected="${criteria.yearFrom eq 2020}">2020</option>
-							        <option value="2019" th:selected="${criteria.yearFrom eq 2019}">2019</option>
-							        <option value="2018" th:selected="${criteria.yearFrom eq 2018}">2018</option>
-							        <option value="2017" th:selected="${criteria.yearFrom eq 2017}">2017</option>
-									<option value="2016" th:selected="${criteria.yearFrom eq 2016}">2016</option>
-									<option value="2015" th:selected="${criteria.yearFrom eq 2015}">2015</option>
-									<option value="2014" th:selected="${criteria.yearFrom eq 2014}">2014</option>
-									<option value="2013" th:selected="${criteria.yearFrom eq 2013}">2013</option>
-									<option value="2012" th:selected="${criteria.yearFrom eq 2012}">2012</option>
-									<option value="2011" th:selected="${criteria.yearFrom eq 2011}">2011</option>
-									<option value="2010" th:selected="${criteria.yearFrom eq 2010}">2010</option>
-									<option value="2009" th:selected="${criteria.yearFrom eq 2009}">2009</option>
-									<option value="2008" th:selected="${criteria.yearFrom eq 2008}">2008</option>
-									<option value="2007" th:selected="${criteria.yearFrom eq 2007}">2007</option>
-									<option value="2006" th:selected="${criteria.yearFrom eq 2006}">2006</option>
-									<option value="2005" th:selected="${criteria.yearFrom eq 2005}">2005</option>
-									<option value="2004" th:selected="${criteria.yearFrom eq 2004}">2004</option>
-									<option value="2003" th:selected="${criteria.yearFrom eq 2003}">2003</option>
-									<option value="2002" th:selected="${criteria.yearFrom eq 2002}">2002</option>
-									<option value="2001" th:selected="${criteria.yearFrom eq 2001}">2001</option>
-									<option value="2000" th:selected="${criteria.yearFrom eq 2000}">2000</option>
-									<option value="1999" th:selected="${criteria.yearFrom eq 1999}">1999</option>
-									<option value="1998" th:selected="${criteria.yearFrom eq 1998}">1998</option>
-									<option value="1997" th:selected="${criteria.yearFrom eq 1997}">1997</option>
-									<option value="1996" th:selected="${criteria.yearFrom eq 1996}">1996</option>
-									<option value="1995" th:selected="${criteria.yearFrom eq 1995}">1995</option>
-									<option value="1994" th:selected="${criteria.yearFrom eq 1994}">1994</option>
-									<option value="1993" th:selected="${criteria.yearFrom eq 1993}">1993</option>
-									<option value="1992" th:selected="${criteria.yearFrom eq 1992}">1992</option>
-									<option value="1991" th:selected="${criteria.yearFrom eq 1991}">1991</option>
-									<option value="1990" th:selected="${criteria.yearFrom eq 1990}">1990</option>
-									<option value="1985" th:selected="${criteria.yearFrom eq 1985}">1985</option>
-									<option value="1980" th:selected="${criteria.yearFrom eq 1980}">1980</option>
-									<option value="1975" th:selected="${criteria.yearFrom eq 1975}">1975</option>
-									<option value="1970" th:selected="${criteria.yearFrom eq 1970}">1970</option>
-									<option value="1965" th:selected="${criteria.yearFrom eq 1965}">1965</option>
-									<option value="1960" th:selected="${criteria.yearFrom eq 1960}">1960</option>
-									<option value="1900" th:selected="${criteria.yearFrom eq 1900}">1900</option>
-							    </select>
+						<fieldset class="form-group">
+							<legend>Κυβικά</legend>
+							<div class="form-row">
+								<div class="col">
+									<select name="engineSizeMin" class="form-control">
+								        <option disabled selected>Από</option>
+								        <option value="0" th:selected="${criteria.engineSizeMin eq 0}">0cc</option>
+								        <option value="500" th:selected="${criteria.engineSizeMin eq 500}">500cc</option>
+								        <option value="1000" th:selected="${criteria.engineSizeMin eq 1000}">1000cc</option>
+								        <option value="1500" th:selected="${criteria.engineSizeMin eq 1500}">1500cc</option>
+								        <option value="2000" th:selected="${criteria.engineSizeMin eq 2000}">2000cc</option>
+								        <option value="2500" th:selected="${criteria.engineSizeMin eq 2500}">2500cc</option>
+								        <option value="3000" th:selected="${criteria.engineSizeMin eq 3000}">3000cc</option>
+								        <option value="3500" th:selected="${criteria.engineSizeMin eq 3500}">3500cc</option>
+								        <option value="4000" th:selected="${criteria.engineSizeMin eq 4000}">4000cc</option>
+								    </select>
+								</div>
+								<div class="col">
+									<select name="engineSizeMax" class="form-control">
+								        <option disabled selected>Έως</option>
+								        <option value="500" th:selected="${criteria.engineSizeMax eq 500}">500cc</option>
+								        <option value="1000" th:selected="${criteria.engineSizeMax eq 1000}">1000cc</option>
+								        <option value="1500" th:selected="${criteria.engineSizeMax eq 1500}">1500cc</option>
+								        <option value="2000" th:selected="${criteria.engineSizeMax eq 2000}">2000cc</option>
+								        <option value="2500" th:selected="${criteria.engineSizeMax eq 2500}">2500cc</option>
+								        <option value="3000" th:selected="${criteria.engineSizeMax eq 3000}">3000cc</option>
+								        <option value="3500" th:selected="${criteria.engineSizeMax eq 3500}">3500cc</option>
+								        <option value="4000" th:selected="${criteria.engineSizeMax eq 4000}">4000cc</option>
+								    </select>
+								</div>
 							</div>
-							<div class="col">
-							    <select name="yearTo" class="form-control">
-							       	<option disabled selected>Οποιοδήποτε</option>
-							       	<option value="2021" th:selected="${criteria.yearTo eq 2021}">2021</option>
-							        <option value="2020" th:selected="${criteria.yearTo eq 2020}">2020</option>
-							        <option value="2019" th:selected="${criteria.yearTo eq 2019}">2019</option>
-							        <option value="2018" th:selected="${criteria.yearTo eq 2018}">2018</option>
-							        <option value="2017" th:selected="${criteria.yearTo eq 2017}">2017</option>
-									<option value="2016" th:selected="${criteria.yearTo eq 2016}">2016</option>
-									<option value="2015" th:selected="${criteria.yearTo eq 2015}">2015</option>
-									<option value="2014" th:selected="${criteria.yearTo eq 2014}">2014</option>
-									<option value="2013" th:selected="${criteria.yearTo eq 2013}">2013</option>
-									<option value="2012" th:selected="${criteria.yearTo eq 2012}">2012</option>
-									<option value="2011" th:selected="${criteria.yearTo eq 2011}">2011</option>
-									<option value="2010" th:selected="${criteria.yearTo eq 2010}">2010</option>
-									<option value="2009" th:selected="${criteria.yearTo eq 2009}">2009</option>
-									<option value="2008" th:selected="${criteria.yearTo eq 2008}">2008</option>
-									<option value="2007" th:selected="${criteria.yearTo eq 2007}">2007</option>
-									<option value="2006" th:selected="${criteria.yearTo eq 2006}">2006</option>
-									<option value="2005" th:selected="${criteria.yearTo eq 2005}">2005</option>
-									<option value="2004" th:selected="${criteria.yearTo eq 2004}">2004</option>
-									<option value="2003" th:selected="${criteria.yearTo eq 2003}">2003</option>
-									<option value="2002" th:selected="${criteria.yearTo eq 2002}">2002</option>
-									<option value="2001" th:selected="${criteria.yearTo eq 2001}">2001</option>
-									<option value="2000" th:selected="${criteria.yearTo eq 2000}">2000</option>
-									<option value="1999" th:selected="${criteria.yearTo eq 1999}">1999</option>
-									<option value="1998" th:selected="${criteria.yearTo eq 1998}">1998</option>
-									<option value="1997" th:selected="${criteria.yearTo eq 1997}">1997</option>
-									<option value="1996" th:selected="${criteria.yearTo eq 1996}">1996</option>
-									<option value="1995" th:selected="${criteria.yearTo eq 1995}">1995</option>
-									<option value="1994" th:selected="${criteria.yearTo eq 1994}">1994</option>
-									<option value="1993" th:selected="${criteria.yearTo eq 1993}">1993</option>
-									<option value="1992" th:selected="${criteria.yearTo eq 1992}">1992</option>
-									<option value="1991" th:selected="${criteria.yearTo eq 1991}">1991</option>
-									<option value="1990" th:selected="${criteria.yearTo eq 1990}">1990</option>
-									<option value="1985" th:selected="${criteria.yearTo eq 1985}">1985</option>
-									<option value="1980" th:selected="${criteria.yearTo eq 1980}">1980</option>
-									<option value="1975" th:selected="${criteria.yearTo eq 1975}">1975</option>
-									<option value="1970" th:selected="${criteria.yearTo eq 1970}">1970</option>
-									<option value="1965" th:selected="${criteria.yearTo eq 1965}">1965</option>
-									<option value="1960" th:selected="${criteria.yearTo eq 1960}">1960</option>
-									<option value="1900" th:selected="${criteria.yearTo eq 1900}">1900</option>
-							    </select>
-							</div>
-						</div>
+						</fieldset>
 					</div>
 				</div>
-				<div class="form-row">
-					<div class="col-4">
-						<h5>Χιλιόμετρα</h5>
-						<div class="form-row">
-							<div class="col">
-								<select name="mileage" class="form-control">
-							        <option disabled selected>Οποιαδήποτε</option>
-							        <option value="0" th:selected="${criteria.priceMin eq 0}">0 χλμ</option>
-							        <option value="1000" th:selected="${criteria.mileage eq 1000}">1000 χλμ και κάτω</option>
-							        <option value="3000" th:selected="${criteria.mileage eq 3000}">3000 χλμ και κάτω</option>
-							        <option value="5000" th:selected="${criteria.mileage eq 5000}">5000 χλμ και κάτω</option>
-							        <option value="10000" th:selected="${criteria.mileage eq 10000}">10000 χλμ και κάτω</option>
-							        <option value="15000" th:selected="${criteria.mileage eq 15000}">15000 χλμ και κάτω</option>
-							    </select>
+				<fieldset class="form-group">
+					<legend>Καύσιμο</legend>
+					<div class="form-row">
+						<div class="col">
+							<div class="form-check-inline">
+								<input id="gasoline" name="fuelType" type="checkbox" th:value="GASOLINE" class="form-check-input" th:checked="${criteria.fuelTypes.contains(T(com.github.cartrader.entity.
+								FuelType).GASOLINE)}"/>
+								<label for="gasoline" class="form-check-label">Βενζίνη</label>
+							</div>
+							<div class="form-check-inline">
+								<input id="diesel" name="fuelType" type="checkbox" th:value="DIESEL" class="form-check-input" th:checked="${criteria.fuelTypes.contains(T(com.github.cartrader.entity.
+								FuelType).DIESEL)}"/>
+								<label for="diesel" class="form-check-label">Πετρέλαιο</label>
+							</div>
+							<div class="form-check-inline">
+								<input id="cng" name="fuelType" type="checkbox" th:value="COMPRESSED_NATURAL_GAS" class="form-check-input" th:checked="${criteria.fuelTypes.contains(T(com.github.cartrader.entity.
+								FuelType).COMPRESSED_NATURAL_GAS)}"/>
+								<label for="cng" class="form-check-label">Φυσικό αέριο(CNG)</label>
+							</div>
+							<div class="form-check-inline">
+								<input id="electric" name="fuelType" type="checkbox" th:value="ELECTRIC" class="form-check-input" th:checked="${criteria.fuelTypes.contains(T(com.github.cartrader.entity.
+								FuelType).ELECTRIC)}"/>
+								<label for="electric" class="form-check-label">Ηλεκτρικό</label>
+							</div>
+							<div class="form-check-inline">
+								<input id="other" name="fuelType" type="checkbox" th:value="OTHER" class="form-check-input" th:checked="${criteria.fuelTypes.contains(T(com.github.cartrader.entity.
+								FuelType).OTHER)}"/>
+								<label for="other" class="form-check-label">Άλλο</label>
 							</div>
 						</div>
 					</div>
-					<div class="col-4">
-						<h5>Κυβικά</h5>
-						<div class="form-row">
-							<div class="col">
-								<select name="engineSizeMin" class="form-control">
-							        <option disabled selected>Από</option>
-							        <option value="0" th:selected="${criteria.engineSizeMin eq 0}">0cc</option>
-							        <option value="500" th:selected="${criteria.engineSizeMin eq 500}">500cc</option>
-							        <option value="1000" th:selected="${criteria.engineSizeMin eq 1000}">1000cc</option>
-							        <option value="1500" th:selected="${criteria.engineSizeMin eq 1500}">1500cc</option>
-							        <option value="2000" th:selected="${criteria.engineSizeMin eq 2000}">2000cc</option>
-							        <option value="2500" th:selected="${criteria.engineSizeMin eq 2500}">2500cc</option>
-							        <option value="3000" th:selected="${criteria.engineSizeMin eq 3000}">3000cc</option>
-							        <option value="3500" th:selected="${criteria.engineSizeMin eq 3500}">3500cc</option>
-							        <option value="4000" th:selected="${criteria.engineSizeMin eq 4000}">4000cc</option>
-							    </select>
-							</div>
-							<div class="col">
-								<select name="engineSizeMax" class="form-control">
-							        <option disabled selected>Έως</option>
-							        <option value="500" th:selected="${criteria.engineSizeMax eq 500}">500cc</option>
-							        <option value="1000" th:selected="${criteria.engineSizeMax eq 1000}">1000cc</option>
-							        <option value="1500" th:selected="${criteria.engineSizeMax eq 1500}">1500cc</option>
-							        <option value="2000" th:selected="${criteria.engineSizeMax eq 2000}">2000cc</option>
-							        <option value="2500" th:selected="${criteria.engineSizeMax eq 2500}">2500cc</option>
-							        <option value="3000" th:selected="${criteria.engineSizeMax eq 3000}">3000cc</option>
-							        <option value="3500" th:selected="${criteria.engineSizeMax eq 3500}">3500cc</option>
-							        <option value="4000" th:selected="${criteria.engineSizeMax eq 4000}">4000cc</option>
-							    </select>
-							</div>
-						</div>
+				</fieldset>
+				<!-- TODO: Categorize features into types for easier access -->
+				<fieldset class="form-group">
+					<legend>Χαρακτηριστικά</legend>
+					<div id="features">
+						<script>
+							$(() => {
+								$.ajax({
+									url: "/features",
+									success: (features) => {
+										features.forEach((feature) => {
+											let input = $('<div class="form-check-inline"><input id="feature-' + feature.id + '" name="feature" type="checkbox" value="'+ feature.id +'" class="form-check-input"/><label for="feature-' + feature.id + '" class="form-check-label">' + feature.name + '</label></div>');
+											
+											$('#features').append(input);
+										});
+									}
+								});
+							});
+						</script>
 					</div>
-				</div>
-				<h5>Καύσιμο</h5>
-				<div class="form-row">
-					<div class="col">
-						<div class="form-check">
-							<input id="gasoline" name="fuelType" type="checkbox" th:value="GASOLINE" class="form-check-input" th:checked="${criteria.fuelTypes.contains(T(com.github.cartrader.entity.
-							FuelType).GASOLINE)}"/>
-							<label for="gasoline" class="form-check-label">Βενζίνη</label>
-						</div>
-						<div class="form-check">
-							<input id="diesel" name="fuelType" type="checkbox" th:value="DIESEL" class="form-check-input" th:checked="${criteria.fuelTypes.contains(T(com.github.cartrader.entity.
-							FuelType).DIESEL)}"/>
-							<label for="diesel" class="form-check-label">Πετρέλαιο</label>
-						</div>
-						<div class="form-check">
-							<input id="cng" name="fuelType" type="checkbox" th:value="COMPRESSED_NATURAL_GAS" class="form-check-input" th:checked="${criteria.fuelTypes.contains(T(com.github.cartrader.entity.
-							FuelType).COMPRESSED_NATURAL_GAS)}"/>
-							<label for="cng" class="form-check-label">Φυσικό αέριο(CNG)</label>
-						</div>
-						<div class="form-check">
-							<input id="electric" name="fuelType" type="checkbox" th:value="ELECTRIC" class="form-check-input" th:checked="${criteria.fuelTypes.contains(T(com.github.cartrader.entity.
-							FuelType).ELECTRIC)}"/>
-							<label for="electric" class="form-check-label">Ηλεκτρικό</label>
-						</div>
-						<div class="form-check">
-							<input id="other" name="fuelType" type="checkbox" th:value="OTHER" class="form-check-input" th:checked="${criteria.fuelTypes.contains(T(com.github.cartrader.entity.
-							FuelType).OTHER)}"/>
-							<label for="other" class="form-check-label">Άλλο</label>
-						</div>
-					</div>
-				</div>
+				</fieldset>
 			  	<button class="btn btn-primary" type="submit">Αναζήτησε</button>
 			</form>
 		</div>

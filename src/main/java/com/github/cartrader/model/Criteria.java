@@ -169,7 +169,7 @@ public class Criteria {
 		return features;
 	}
 	
-	public void setFeatures(Set<Feature> features) {
+	public void setFeature(Set<Feature> features) {
 		features.forEach((feature) -> {
 			this.specification = specification.and(new FeatureSpecification(feature));
 		});

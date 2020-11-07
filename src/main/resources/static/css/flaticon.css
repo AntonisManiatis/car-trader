@@ -1,0 +1,81 @@
+	/*
+  	Flaticon icon font: Flaticon
+  	Creation date: 22/06/2016 15:28
+  	*/
+
+@font-face {
+  font-family: "Flaticon";
+  src: url("./Flaticon.eot");
+  src: url("./Flaticon.eot?#iefix") format("embedded-opentype"),
+       url("./Flaticon.woff") format("woff"),
+       url("./Flaticon.ttf") format("truetype"),
+       url("./Flaticon.svg#Flaticon") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  @font-face {
+    font-family: "Flaticon";
+    src: url("./Flaticon.svg#Flaticon") format("svg");
+  }
+}
+
+[class^="flaticon-"]:before, [class*=" flaticon-"]:before,
+[class^="flaticon-"]:after, [class*=" flaticon-"]:after {   
+  font-family: Flaticon;
+        font-size: 20px;
+font-style: normal;
+margin-left: 20px;
+}
+
+.flaticon-24-hours:before { content: "\f100"; }
+.flaticon-aerosol:before { content: "\f101"; }
+.flaticon-air-filter:before { content: "\f102"; }
+.flaticon-airbag:before { content: "\f103"; }
+.flaticon-autolift:before { content: "\f104"; }
+.flaticon-automatic-wash-car:before { content: "\f105"; }
+.flaticon-balancing:before { content: "\f106"; }
+.flaticon-battery:before { content: "\f107"; }
+.flaticon-brake-disk:before { content: "\f108"; }
+.flaticon-car:before { content: "\f109"; }
+.flaticon-car-painting:before { content: "\f10a"; }
+.flaticon-car-search:before { content: "\f10b"; }
+.flaticon-car-wash:before { content: "\f10c"; }
+.flaticon-chassis:before { content: "\f10d"; }
+.flaticon-cracked-windshield:before { content: "\f10e"; }
+.flaticon-cross-wrench:before { content: "\f10f"; }
+.flaticon-damage:before { content: "\f110"; }
+.flaticon-electric-car:before { content: "\f111"; }
+.flaticon-evacuator:before { content: "\f112"; }
+.flaticon-exhaust-pipe:before { content: "\f113"; }
+.flaticon-fix-sign:before { content: "\f114"; }
+.flaticon-flat-tire:before { content: "\f115"; }
+.flaticon-funnel:before { content: "\f116"; }
+.flaticon-fuse:before { content: "\f117"; }
+.flaticon-garage:before { content: "\f118"; }
+.flaticon-gas-station:before { content: "\f119"; }
+.flaticon-gears:before { content: "\f11a"; }
+.flaticon-hammer-and-wrench:before { content: "\f11b"; }
+.flaticon-headlight:before { content: "\f11c"; }
+.flaticon-jerrycan:before { content: "\f11d"; }
+.flaticon-key:before { content: "\f11e"; }
+.flaticon-mirror:before { content: "\f11f"; }
+.flaticon-motor:before { content: "\f120"; }
+.flaticon-oil:before { content: "\f121"; }
+.flaticon-piston:before { content: "\f122"; }
+.flaticon-radiator:before { content: "\f123"; }
+.flaticon-screwdriver-and-wrench:before { content: "\f124"; }
+.flaticon-shock-absorber:before { content: "\f125"; }
+.flaticon-signaling:before { content: "\f126"; }
+.flaticon-spark-plug:before { content: "\f127"; }
+.flaticon-steering-wheel:before { content: "\f128"; }
+.flaticon-tachometer:before { content: "\f129"; }
+.flaticon-tank:before { content: "\f12a"; }
+.flaticon-timing-belt:before { content: "\f12b"; }
+.flaticon-tinting:before { content: "\f12c"; }
+.flaticon-traffic-cone:before { content: "\f12d"; }
+.flaticon-transmision:before { content: "\f12e"; }
+.flaticon-voltage:before { content: "\f12f"; }
+.flaticon-wheel:before { content: "\f130"; }
+.flaticon-wheel-and-manometer:before { content: "\f131"; }
