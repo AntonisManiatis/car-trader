@@ -12,6 +12,7 @@
 		<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
     	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
     	<script th:src="@{/js/index.js}"></script>
+    	<script th:src="@{/js/filters.js}"></script>
 		<th:block th:insert="header"/>
 		<div class="container">
 			<h2>Βρές οτι θές</h2>
@@ -69,7 +70,7 @@
 					<legend>Κατηγορίες</legend>
 					<div class="form-row">
 						<script>
-							fillCategories();
+							initCategories();
 						</script>
 						<div id="categories"></div>
 					</div>
@@ -363,23 +364,53 @@
 						</div>
 					</div>
 				</fieldset>
-				<!-- TODO: Categorize features into types for easier access -->
+				<div class="form-row">
+					<div class="col-4">
+						<fieldset class="form-group">
+							<legend>Κίνηση</legend>
+							<div class="form-check">
+								<input id="drivetrain-fwd" name="drivetrain" type="checkbox" value="FWD" class="form-check-input" th:checked="${criteria.drivetrains.contains(T(com.github.cartrader.entity.
+								DrivetrainType).FWD)}"/>
+								<label for="drivetrain-fwd" class="form-check-label">FWD</label>
+							</div>
+							<div class="form-check">
+								<input id="drivetrain-rwd" name="drivetrain" type="checkbox" value="RWD" class="form-check-input" th:checked="${criteria.drivetrains.contains(T(com.github.cartrader.entity.
+								DrivetrainType).RWD)}"/>
+								<label for="drivetrain-rwd" class="form-check-label">RWD</label>
+							</div>
+							<div class="form-check">
+								<input id="drivetrain-awd" name="drivetrain" type="checkbox" value="AWD" class="form-check-input" th:checked="${criteria.drivetrains.contains(T(com.github.cartrader.entity.
+								DrivetrainType).AWD)}"/>
+								<label for="drivetrain-awd" class="form-check-label">AWD</label>
+							</div>
+						</fieldset>
+					</div>
+					<div class="col-4">
+						<fieldset class="form-group">
+							<legend>Σασμάν</legend>
+							<div class="form-check">
+								<input id="drivetrain-fwd" name="drivetrain" type="checkbox" value="FWD" class="form-check-input" th:checked="${criteria.drivetrains.contains(T(com.github.cartrader.entity.
+								DrivetrainType).FWD)}"/>
+								<label for="drivetrain-fwd" class="form-check-label">Αυτόματο</label>
+							</div>
+							<div class="form-check">
+								<input id="drivetrain-rwd" name="drivetrain" type="checkbox" value="RWD" class="form-check-input" th:checked="${criteria.drivetrains.contains(T(com.github.cartrader.entity.
+								DrivetrainType).RWD)}"/>
+								<label for="drivetrain-rwd" class="form-check-label">Ημιαυτόματο</label>
+							</div>
+							<div class="form-check">
+								<input id="drivetrain-awd" name="drivetrain" type="checkbox" value="AWD" class="form-check-input" th:checked="${criteria.drivetrains.contains(T(com.github.cartrader.entity.
+								DrivetrainType).AWD)}"/>
+								<label for="drivetrain-awd" class="form-check-label">Χειροκίνητο</label>
+							</div>
+						</fieldset>
+					</div>
+				</div>
 				<fieldset class="form-group">
 					<legend>Χαρακτηριστικά</legend>
-					<div id="features">
+					<div id="features" class="list-group-flush">
 						<script>
-							$(() => {
-								$.ajax({
-									url: "/features",
-									success: (features) => {
-										features.forEach((feature) => {
-											let input = $('<div class="form-check-inline"><input id="feature-' + feature.id + '" name="feature" type="checkbox" value="'+ feature.id +'" class="form-check-input"/><label for="feature-' + feature.id + '" class="form-check-label">' + feature.name + '</label></div>');
-											
-											$('#features').append(input);
-										});
-									}
-								});
-							});
+							initFeaturesFilter();
 						</script>
 					</div>
 				</fieldset>

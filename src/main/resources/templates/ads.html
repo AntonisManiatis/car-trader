@@ -32,7 +32,7 @@
 										<label class="form-check-label">Καινούριο</label>
 									</div>
 									<div class="form-check">
-										<input id="used" name="condition" value="USED" class="form-check-input" type="checkbox"/>
+										<input id="used" name="condition" value="USED" class="form-check-input" type="checkbox" th:checked="${criteria.conditions.contains(T(com.github.cartrader.entity.CarCondition).USED)}"/>
 										<label class="form-check-label">Μεταχειρισμένο</label>
 									</div>
 								</div>
@@ -47,15 +47,15 @@
 							<div id="type" class="collapse show">
 								<div class="card-body">
 									<div class="form-check">
-										<input id="rent" name="purpose" type="checkbox" value="RENT" class="form-check-input"/>
+										<input id="rent" name="purpose" type="checkbox" value="RENT" class="form-check-input" th:checked="${criteria.purposes.contains(T(com.github.cartrader.entity.AdPurpose).RENT)}"/>
 										<label class="form-check-label">Ενοικιάζεται</label>
 									</div>
 									<div class="form-check">
-										<input id="buy" name="purpose" type="checkbox" value="BUY" class="form-check-input"/>
+										<input id="buy" name="purpose" type="checkbox" value="BUY" class="form-check-input" th:checked="${criteria.purposes.contains(T(com.github.cartrader.entity.AdPurpose).BUY)}"/>
 										<label class="form-check-label">Ζητείται</label>
 									</div>
 									<div class="form-check">
-										<input id="sell" name="purpose" type="checkbox" value="SELL" class="form-check-input"/>
+										<input id="sell" name="purpose" type="checkbox" value="SELL" class="form-check-input" th:checked="${criteria.purposes.contains(T(com.github.cartrader.entity.AdPurpose).SELL)}"/>
 										<label class="form-check-label">Πωλείται</label>
 									</div>
 								</div>
@@ -313,19 +313,9 @@
 							</div>
 							<div id="featuresCollapse" class="collapse">
 								<div class="card-body">
+									<div id="features" class="list-group-flush"></div>
 									<script>
-										$(() => {
-											$.ajax({
-												url: "/features",
-												success: (features) => {
-													features.forEach((feature) => {
-														let input = $('<div class="form-check"><input name="category" type="checkbox" value="'+ feature.name +'" class="form-check-input"/><label class="form-check-label">' + feature.name + '</label></div>');
-														
-														$('#featuresCollapse').find('.card-body').append(input);
-													});
-												}
-											});
-										});
+										initFeaturesFilter();
 									</script>
 								</div>
 							</div>
