@@ -8,6 +8,7 @@ import com.github.cartrader.entity.Ad;
 import com.github.cartrader.entity.AdPurpose;
 import com.github.cartrader.entity.CarCondition;
 import com.github.cartrader.entity.Category;
+import com.github.cartrader.entity.DrivetrainType;
 import com.github.cartrader.entity.Feature;
 import com.github.cartrader.entity.FuelType;
 import com.github.cartrader.entity.Make;
@@ -22,6 +23,9 @@ public class Criteria {
 	private Set<CarCondition> conditions = Set.of();
 	private Set<AdPurpose> purposes = Set.of();
 	private Set<Category> categories = Set.of();
+
+	private Set<Make> makes = Set.of();
+	private Set<Model> models = Set.of();
 	
 	private Long priceMin;
 	private Long priceMax;
@@ -36,9 +40,8 @@ public class Criteria {
 	
 	private Set<FuelType> fuelTypes = Set.of();
 	
+	private Set<DrivetrainType> drivetrains = Set.of();
 	private Set<Feature> features = Set.of();
-	private Set<Make> makes = Set.of();
-	private Set<Model> models = Set.of();
 	
 	private Specification<Ad> specification = Specification.where(null);
 	
@@ -47,10 +50,12 @@ public class Criteria {
 	}
 	
 	public void setCondition(Set<CarCondition> conditions) {
-		conditions.forEach((condition) -> {
-			this.specification = specification.and(new ConditionSpecification(condition));
-		});
+		var conditionSpecification = Specification.<Ad>where(null);
+		for (var condition : conditions) {
+			conditionSpecification = conditionSpecification.or(new ConditionSpecification(condition));
+		}
 		
+		this.specification = specification.and(conditionSpecification);
 		this.conditions = conditions;
 	}
 	
@@ -59,10 +64,12 @@ public class Criteria {
 	}
 
 	public void setPurpose(Set<AdPurpose> purposes) {
-		purposes.forEach((purpose) -> {
-			this.specification = specification.and(new AdPurposeSpecification(purpose));
-		});
+		var purposeSpecification = Specification.<Ad>where(null);
+		for (var purpose : purposes) {
+			purposeSpecification = purposeSpecification.or(new AdPurposeSpecification(purpose));
+		}
 		
+		this.specification = specification.and(purposeSpecification);
 		this.purposes = purposes;
 	}
 
@@ -71,11 +78,27 @@ public class Criteria {
 	}
 
 	public void setCategory(Set<Category> categories) {
-		categories.forEach((category) -> {
-			this.specification = specification.and(new CategorySpecification(category));
-		});
+		var categorySpecification = Specification.<Ad>where(null);
+		for (var category : categories) {
+			categorySpecification = categorySpecification.or(new CategorySpecification(category));
+		}
 		
+		this.specification = specification.and(categorySpecification);
 		this.categories = categories;
+	}
+
+	public Set<Make> getMakes() {
+		return makes;
+	}
+	
+	public void setMake(Set<Make> makes) {
+		var makeSpecification = Specification.<Ad>where(null);
+		for (var make : makes) {
+			makeSpecification = makeSpecification.or(new MakeSpecification(make));
+		}
+		
+		this.specification = specification.and(makeSpecification);
+		this.makes = makes;
 	}
 	
 	public Long getPriceMin() {
@@ -153,16 +176,16 @@ public class Criteria {
 		this.fuelTypes = fuelTypes;
 	}
 
-	public Set<Make> getMakes() {
-		return makes;
+	public Set<DrivetrainType> getDrivetrains() {
+		return drivetrains;
 	}
-	
-	public void setMake(Set<Make> makes) {
-		makes.forEach((make) -> {
-			this.specification = specification.and(new MakeSpecification(make));
+
+	public void setDrivetrain(Set<DrivetrainType> drivetrains) {
+		drivetrains.forEach((drivetrain) -> {
+			this.specification = specification.and(new DrivetrainTypeSpecification(drivetrain));
 		});
 		
-		this.makes = makes;
+		this.drivetrains = drivetrains;
 	}
 
 	public Set<Feature> getFeatures() {

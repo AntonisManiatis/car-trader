@@ -8,18 +8,19 @@ import javax.persistence.criteria.Root;
 import org.springframework.data.jpa.domain.Specification;
 
 import com.github.cartrader.entity.Ad;
+import com.github.cartrader.entity.DrivetrainType;
 
-public final class MaxPriceSpecification implements Specification<Ad> {
-	private static final long serialVersionUID = 2952379506144205754L;
+public final class DrivetrainTypeSpecification implements Specification<Ad> {
+	private static final long serialVersionUID = 8946921577879163437L;
 	
-	private final long price;
+	private final DrivetrainType drivetrain;
 	
-	public MaxPriceSpecification(long price) {
-		this.price = price;
+	public DrivetrainTypeSpecification(DrivetrainType drivetrain) {
+		this.drivetrain = drivetrain;
 	}
 	
 	@Override
 	public Predicate toPredicate(Root<Ad> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
-		return cb.lessThan(root.get("price"), price);
+		return cb.equal(root.get("car").get("drivetrain"), drivetrain);
 	}
 }
