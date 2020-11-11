@@ -26,12 +26,12 @@ public class MakeController {
 	}
 	
 	@GetMapping("/makes/{id}")
-	public Make get(@PathVariable long id) {
+	public Make get(@PathVariable int id) {
 		return makeService.findById(id);
 	}
 	
 	@GetMapping("/makes/{makeId}/models")
-	public Collection<Model> models(@PathVariable long makeId) {
+	public Collection<Model> models(@PathVariable int makeId) {
 		var make = makeService.findById(makeId);
 		return make.getModels();
 	}

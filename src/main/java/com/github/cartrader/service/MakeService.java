@@ -8,5 +8,5 @@ public interface MakeService {
 	
 	Collection<Make> findAll();
 	
-	Make findById(long id);
+	Make findById(int id);
 }
