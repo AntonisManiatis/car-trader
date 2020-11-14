@@ -16,6 +16,50 @@ function onChangePage(page) {
 	$('#search').click();
 }
 
+function fillMakes() {
+	$(() => {
+		$.ajax({
+			url: "/makes",
+			success: (makes) => {
+				makes.forEach(make => {
+					let option = $('<option>', {
+						selected: query.getAll('make').includes(make.id.toString()),
+						value: make.id,
+						text: make.name
+					});
+
+					$('#make').append(option);
+				});
+			}
+		});
+
+		let makeSelect = $('#make');
+		makeSelect.change(() => {
+			$('#model').empty();
+			$('#model').append('<option disabled selected>Οποιoδήποτε</option>');
+
+			// if no make gets selected then erase everything.
+			let selected = $('#make :selected');
+			if (selected.text() !== 'Οποιαδήποτε') {
+				$.ajax({
+					url: '/makes/' + makeSelect.val() + '/models',
+					success: (models) => {
+						models.forEach(model => {
+							let option = $('<option>', {
+								selected: query.getAll('model').includes(model.id.toString()),
+								value: model.id,
+								text: model.name
+							});
+
+							$('#model').append(option);
+						});
+					}
+				});
+			}
+		});
+	});
+}
+
 function initFeaturesFilter() {
 	let translations = new Map();
 	translations.set('OTHER', 'Άλλο');
@@ -63,6 +107,10 @@ function initFeaturesFilter() {
 	`;
 }
 
+function containsVariable(name, value) {
+	return query.getAll(name).includes(value.toString());
+}
+
 function initCategories() {
 	$(() => {
 		$.ajax({
@@ -94,7 +142,7 @@ function initCategories() {
 	let figure = (category) => `
 		<figure class="figure">
 			<label for="${category.title}">
-				<input id="${category.title}" name="category" value="${category.id}" type="checkbox">
+				<input id="${category.title}" name="category" value="${category.id}" type="checkbox" ${containsVariable('category', category.id) && `checked`}>
 				<img class="figure-img img-fluid" src="${category.picturePath}" alt="Lights">
 				<figcaption class="figure-caption text-center">${category.title}</figcaption>
 			</label>
