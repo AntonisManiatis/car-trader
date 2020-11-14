@@ -1,5 +1,7 @@
 package com.github.cartrader.entity.spec;
 
+import java.time.LocalDate;
+
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
@@ -20,6 +22,6 @@ public final class FromYearSpecification implements Specification<Ad> {
 	
 	@Override
 	public Predicate toPredicate(Root<Ad> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
-		return cb.greaterThanOrEqualTo(root.get("car").get("modelYear"), year);
+		return cb.greaterThanOrEqualTo(root.get("car").get("modelYear"), LocalDate.of(year, 1, 1));
 	}
 }

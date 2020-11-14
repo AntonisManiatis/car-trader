@@ -101,6 +101,19 @@ public class Criteria {
 		this.makes = makes;
 	}
 	
+	public Set<Model> getModels() {
+		return models;
+	}
+
+	public void setModels(Set<Model> models) {
+		var modelSpecification = Specification.<Ad>where(null);
+		for (var model : models) {
+			modelSpecification = modelSpecification.or(new ModelSpecification(model));
+		}
+		
+		this.models = models;
+	}
+
 	public Long getPriceMin() {
 		return priceMin;
 	}
@@ -169,10 +182,12 @@ public class Criteria {
 	}
 
 	public void setFuelType(Set<FuelType> fuelTypes) {
-		fuelTypes.forEach((fuelType) -> {
-			this.specification = specification.and(new FuelTypeSpecification(fuelType));
-		});
+		var fuelSpecification = Specification.<Ad>where(null);
+		for (var fuelType : fuelTypes) {
+			fuelSpecification = fuelSpecification.or(new FuelTypeSpecification(fuelType));
+		}
 		
+		this.specification = this.specification.and(fuelSpecification);
 		this.fuelTypes = fuelTypes;
 	}
 

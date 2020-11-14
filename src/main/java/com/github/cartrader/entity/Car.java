@@ -3,8 +3,8 @@ package com.github.cartrader.entity;
 import java.time.LocalDate;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Embeddable;
+import javax.persistence.Embedded;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -12,18 +12,24 @@ import javax.persistence.OneToOne;
 @Embeddable
 public class Car {
 	private CarCondition carCondition = CarCondition.UNDEFINED;
-	private EngineDetails details;
+	
+	@OneToOne
+	@JoinColumn(name="makeId", referencedColumnName="id")
+	private Make make;
+	@OneToOne
+	@JoinColumn(name="modelId", referencedColumnName="id")
+	private Model model;
+	@OneToOne
+	@JoinColumn(name="categoryId", referencedColumnName="id")
+	private Category category;
+	
+	@Embedded
+	private EngineDetails engineDetails;
 	private DrivetrainType drivetrain = DrivetrainType.UNDEFINED;
 	private TransmissionType transmition = TransmissionType.UNDEFINED;
 	
-	@OneToOne(cascade = CascadeType.PERSIST)
-	@JoinColumn(name="makeId", referencedColumnName="id")
-	private Make make;
-	
-	@OneToOne(cascade = CascadeType.PERSIST)
-	@JoinColumn(name="categoryId", referencedColumnName="id")
-	private Category category;
 	private LocalDate modelYear;
+	private int mileage;
 	
 	@OneToMany
 	private Set<Feature> features = Set.of();
@@ -39,12 +45,12 @@ public class Car {
 		this.carCondition = condition;
 	}
 
-	public EngineDetails getDetails() {
-		return details;
+	public EngineDetails getEngineDetails() {
+		return engineDetails;
 	}
 
-	public void setDetails(EngineDetails details) {
-		this.details = details;
+	public void setEngineDetails(EngineDetails engineDetails) {
+		this.engineDetails = engineDetails;
 	}
 
 	public DrivetrainType getDrivetrain() {
@@ -85,6 +91,14 @@ public class Car {
 
 	public void setModelYear(LocalDate modelYear) {
 		this.modelYear = modelYear;
+	}
+
+	public int getMileage() {
+		return mileage;
+	}
+
+	public void setMileage(int mileage) {
+		this.mileage = mileage;
 	}
 
 	public Set<Feature> getFeatures() {

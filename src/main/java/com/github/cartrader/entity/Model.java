@@ -14,7 +14,7 @@ import javax.persistence.ManyToOne;
 public class Model {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long id;
+	private int id;
 	private String name;
 	
 	@ManyToOne
@@ -22,11 +22,11 @@ public class Model {
 	
 	// A Model logically belongs to a category, Audi 80 comes in either a coupe or a sedan
 
-	public long getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 

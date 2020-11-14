@@ -20,6 +20,6 @@ public final class MinPriceSpecification implements Specification<Ad> {
 	
 	@Override
 	public Predicate toPredicate(Root<Ad> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
-		return cb.greaterThan(root.get("price"), price);
+		return cb.greaterThanOrEqualTo(root.get("price"), price);
 	}
 }
