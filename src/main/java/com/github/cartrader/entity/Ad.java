@@ -4,12 +4,13 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.ElementCollection;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToOne;
 
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -27,8 +28,10 @@ public class Ad {
 	@Embedded
 	private Car car;
 	
-	@OneToMany
+	@ElementCollection
 	private List<PictureId> pictures = List.of();
+	@ManyToOne
+	private Seller seller;
 	
 	/**
 	 * Usually currency is represented as a {@link BigDecimal} but for
@@ -90,5 +93,13 @@ public class Ad {
 
 	public void setPictures(List<PictureId> pictures) {
 		this.pictures = pictures;
+	}
+
+	public Seller getSeller() {
+		return seller;
+	}
+
+	public void setSeller(Seller seller) {
+		this.seller = seller;
 	}
 }

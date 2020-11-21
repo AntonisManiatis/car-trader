@@ -4,6 +4,7 @@
 	    <meta charset="utf-8">
 	    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+		<link rel="stylesheet" type="text/css" th:href="@{/css/flaticon.css}">
 		<title>Μεταχειρισμένα & Καινούρια Αυτοκίνητα - CarTrader.gr</title>
 	</head>
 	<body>
@@ -18,7 +19,7 @@
 			<div id="ad">
 				<h2 th:text="${ad.title}"/>
 				<div class="row">
-					<div class="col-9">
+					<div class="col-8">
 						<img th:if="${ad.pictures.empty}" th:src="@{/default.png}" class="card-img-top" alt="..."/>
 						<div th:unless="${ad.pictures.empty}" id="indicators" class="carousel slide" data-ride="carousel">
 							<ol th:if="${ad.pictures.size() > 1}" class="carousel-indicators" th:each="picture, iter: ${ad.pictures}">
@@ -40,9 +41,85 @@
 								</a>
 							</th:block>
 						</div>
+						<div class="card mt-5">
+							<div class="card-header">
+								Στοιχεία αγγελίας
+							</div>
+							<div class="card-body">
+							    <table class="table table-hover" th:with="car=${ad.car}">
+							    	<tr>
+							    		<th scope="row">Αριθμός Αγγελίας</th>
+							    		<td th:text="${ad.id}"></td>
+							    	</tr>
+							    	<tr>
+							    		<th scope="row">Κατάσταση</th>
+							    		<th:block th:switch="${car.getCondition()}">
+										    <td th:case="${T(com.github.cartrader.entity.CarCondition).UNDEFINED}" th:text="Άγνωστο"></td>
+										    <td th:case="${T(com.github.cartrader.entity.CarCondition).NEW}" th:text="Καινούριο"></td>
+										    <td th:case="${T(com.github.cartrader.entity.CarCondition).USED}" th:text="Μεταχειρισμένο"></td>
+										</th:block>
+							    	</tr>
+							    	<tr>
+							    		<th scope="row">Κατηγορία</th>
+							    		<td th:text="${car.category.title}"></td>
+							    	</tr>
+							    </table>
+							</div>
+						</div>
+						<div class="card mt-2" th:if="${!ad.title.empty}">
+							<div class="card-header">
+								Περιγραφή
+							</div>
+							<div class="card-body" th:text="${ad.title}"></div>
+						</div>
+						<div class="card mt-2" th:if="${!ad.car.features.empty}">
+							<div class="card-header">
+								Χαρακτηριστικά
+							</div>
+							<div class="card-body">
+							    <ul th:each="feature: ${ad.car.features}">
+							    	<li th:text="${feature.name}"></li>
+							    </ul>
+							</div>
+						</div>
+						<div class="card mt-2" th:if="${ad.seller != null}">
+							<div class="card-header">
+								<th:block th:switch="${ad.seller.sellerType}">
+									<div th:case="${T(com.github.cartrader.entity.SellerType).UNDEFINED}" th:text="Άγνωστο">
+										
+									</div>
+									<div th:case="${T(com.github.cartrader.entity.SellerType).PRIVATE_SELLER}" th:text="Καινούριο">
+										
+									</div>
+									<div th:case="${T(com.github.cartrader.entity.SellerType).DEALER}" th:text="Μεταχειρισμένο">
+										
+									</div>
+								</th:block>
+							</div>
+							<div class="card-body" th:with="contactInfo=${ad.seller?.contactInfo}">
+								<div th:text="${contactInfo?.country}"></div>
+								<div th:each="telephone: ${contactInfo?.telephones}" th:text="${telephone}"></div>
+							</div>
+						</div>
+						<!-- TODO: Contact -->
 					</div>
-					<div class="col-3">
-						
+					<div class="col-4">
+						<h2><span class="badge badge-primary" th:text="${ad.price}"></span> &euro;</h2>
+						<div class="row">
+							<div class="col">
+								<figure class="figure">
+									<img th:src="@{/icons/car.png}" class="figure-img img-fluid rounded" alt="A generic square placeholder image with rounded corners in a figure.">
+								  	<figcaption class="figure-caption">A caption for the above image.</figcaption>
+
+								</figure>
+							</div>
+							<div class="col">
+								<figure class="figure">
+									<img th:src="@{/icons/tachometer.png}" class="figure-img img-fluid rounded" alt="A generic square placeholder image with rounded corners in a figure.">
+								  	<figcaption class="figure-caption">A caption for the above image.</figcaption>
+								</figure>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
