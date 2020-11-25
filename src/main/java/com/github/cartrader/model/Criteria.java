@@ -13,6 +13,7 @@ import com.github.cartrader.entity.Feature;
 import com.github.cartrader.entity.FuelType;
 import com.github.cartrader.entity.Make;
 import com.github.cartrader.entity.Model;
+import com.github.cartrader.entity.SellerType;
 import com.github.cartrader.entity.spec.*;
 
 /**
@@ -41,6 +42,7 @@ public class Criteria {
 	private Set<FuelType> fuelTypes = Set.of();
 	
 	private Set<DrivetrainType> drivetrains = Set.of();
+	private Set<SellerType> sellerTypes = Set.of();
 	private Set<Feature> features = Set.of();
 	
 	private Specification<Ad> specification = Specification.where(null);
@@ -201,6 +203,20 @@ public class Criteria {
 		});
 		
 		this.drivetrains = drivetrains;
+	}
+
+	public Set<SellerType> getSellerTypes() {
+		return sellerTypes;
+	}
+
+	public void setSellerType(Set<SellerType> sellerTypes) {
+		var sellerTypeSpecification = Specification.<Ad>where(null);
+		for (var sellerType : sellerTypes) {
+			sellerTypeSpecification = sellerTypeSpecification.or(new SellerTypeSpecification(sellerType));
+		}
+		
+		this.specification = this.specification.and(sellerTypeSpecification);
+		this.sellerTypes = sellerTypes;
 	}
 
 	public Set<Feature> getFeatures() {
