@@ -5,6 +5,7 @@
 	    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 		<link rel="stylesheet" type="text/css" th:href="@{/css/flaticon.css}">
+		<link rel="stylesheet" type="text/css" th:href="@{/css/search.css}">
 		<title>Μεταχειρισμένα & Καινούρια Αυτοκίνητα - CarTrader.gr</title>
 	</head>
 	<body>
@@ -23,18 +24,18 @@
 					</div>
 				</div>
 				<fieldset class="form-group">
-					<legend>Κατάσταση</legend>
+					<legend th:text="#{condition}"></legend>
 					<div class="form-row">
 						<div class="col-md-3">
 							<div class="form-check">
 								<input id="new" name="condition" value="NEW" class="form-check-input" type="checkbox" th:checked="${criteria.conditions.contains(T(com.github.cartrader.entity.CarCondition).NEW)}"/>
-								<label class="form-check-label" for="new">Καινούριο</label>
+								<label class="form-check-label" for="new" th:text="#{new}"></label>
 							</div>
 						</div>
 						<div class="col-md-3">
 							<div class="form-check">
 								<input id="used" name="condition" value="USED" class="form-check-input" type="checkbox" th:checked="${criteria.conditions.contains(T(com.github.cartrader.entity.CarCondition).USED)}"/>
-								<label class="form-check-label" for="used">Μεταχειρισμένο</label>
+								<label class="form-check-label" for="used" th:text="#{used}"></label>
 							</div>
 						</div>
 					</div>
@@ -300,123 +301,174 @@
 							</div>
 						</fieldset>
 					</div>
-					<div class="col-4">
-						<fieldset class="form-group">
-							<legend>Κυβικά</legend>
-							<div class="form-row">
-								<div class="col">
-									<select name="engineSizeMin" class="form-control">
-								        <option disabled selected>Από</option>
-								        <option value="0" th:selected="${criteria.engineSizeMin eq 0}">0cc</option>
-								        <option value="500" th:selected="${criteria.engineSizeMin eq 500}">500cc</option>
-								        <option value="1000" th:selected="${criteria.engineSizeMin eq 1000}">1000cc</option>
-								        <option value="1500" th:selected="${criteria.engineSizeMin eq 1500}">1500cc</option>
-								        <option value="2000" th:selected="${criteria.engineSizeMin eq 2000}">2000cc</option>
-								        <option value="2500" th:selected="${criteria.engineSizeMin eq 2500}">2500cc</option>
-								        <option value="3000" th:selected="${criteria.engineSizeMin eq 3000}">3000cc</option>
-								        <option value="3500" th:selected="${criteria.engineSizeMin eq 3500}">3500cc</option>
-								        <option value="4000" th:selected="${criteria.engineSizeMin eq 4000}">4000cc</option>
-								    </select>
-								</div>
-								<div class="col">
-									<select name="engineSizeMax" class="form-control">
-								        <option disabled selected>Έως</option>
-								        <option value="500" th:selected="${criteria.engineSizeMax eq 500}">500cc</option>
-								        <option value="1000" th:selected="${criteria.engineSizeMax eq 1000}">1000cc</option>
-								        <option value="1500" th:selected="${criteria.engineSizeMax eq 1500}">1500cc</option>
-								        <option value="2000" th:selected="${criteria.engineSizeMax eq 2000}">2000cc</option>
-								        <option value="2500" th:selected="${criteria.engineSizeMax eq 2500}">2500cc</option>
-								        <option value="3000" th:selected="${criteria.engineSizeMax eq 3000}">3000cc</option>
-								        <option value="3500" th:selected="${criteria.engineSizeMax eq 3500}">3500cc</option>
-								        <option value="4000" th:selected="${criteria.engineSizeMax eq 4000}">4000cc</option>
-								    </select>
-								</div>
-							</div>
-						</fieldset>
-					</div>
 				</div>
-				<fieldset class="form-group">
-					<legend>Καύσιμο</legend>
-					<div class="form-row">
-						<div class="col">
-							<div class="form-check-inline">
-								<input id="gasoline" name="fuelType" type="checkbox" th:value="GASOLINE" class="form-check-input" th:checked="${criteria.fuelTypes.contains(T(com.github.cartrader.entity.
-								FuelType).GASOLINE)}"/>
-								<label for="gasoline" class="form-check-label">Βενζίνη</label>
-							</div>
-							<div class="form-check-inline">
-								<input id="diesel" name="fuelType" type="checkbox" th:value="DIESEL" class="form-check-input" th:checked="${criteria.fuelTypes.contains(T(com.github.cartrader.entity.
-								FuelType).DIESEL)}"/>
-								<label for="diesel" class="form-check-label">Πετρέλαιο</label>
-							</div>
-							<div class="form-check-inline">
-								<input id="cng" name="fuelType" type="checkbox" th:value="COMPRESSED_NATURAL_GAS" class="form-check-input" th:checked="${criteria.fuelTypes.contains(T(com.github.cartrader.entity.
-								FuelType).COMPRESSED_NATURAL_GAS)}"/>
-								<label for="cng" class="form-check-label">Φυσικό αέριο(CNG)</label>
-							</div>
-							<div class="form-check-inline">
-								<input id="electric" name="fuelType" type="checkbox" th:value="ELECTRIC" class="form-check-input" th:checked="${criteria.fuelTypes.contains(T(com.github.cartrader.entity.
-								FuelType).ELECTRIC)}"/>
-								<label for="electric" class="form-check-label">Ηλεκτρικό</label>
-							</div>
-							<div class="form-check-inline">
-								<input id="other" name="fuelType" type="checkbox" th:value="OTHER" class="form-check-input" th:checked="${criteria.fuelTypes.contains(T(com.github.cartrader.entity.
-								FuelType).OTHER)}"/>
-								<label for="other" class="form-check-label">Άλλο</label>
-							</div>
-						</div>
-					</div>
-				</fieldset>
 				<div class="form-row">
-					<div class="col-4">
+					<div class="col">
 						<fieldset class="form-group">
-							<legend>Κίνηση</legend>
+							<legend>Ιδιώτης / Έμπορος</legend>
 							<div class="form-check">
-								<input id="drivetrain-fwd" name="drivetrain" type="checkbox" value="FWD" class="form-check-input" th:checked="${criteria.drivetrains.contains(T(com.github.cartrader.entity.
-								DrivetrainType).FWD)}"/>
-								<label for="drivetrain-fwd" class="form-check-label">FWD</label>
+							  	<input class="form-check-input" type="checkbox" name="sellerType" value="PRIVATE_SELLER">
+							  	<label class="form-check-label" for="sellerType">Ιδιώτης</label>
 							</div>
 							<div class="form-check">
-								<input id="drivetrain-rwd" name="drivetrain" type="checkbox" value="RWD" class="form-check-input" th:checked="${criteria.drivetrains.contains(T(com.github.cartrader.entity.
-								DrivetrainType).RWD)}"/>
-								<label for="drivetrain-rwd" class="form-check-label">RWD</label>
-							</div>
-							<div class="form-check">
-								<input id="drivetrain-awd" name="drivetrain" type="checkbox" value="AWD" class="form-check-input" th:checked="${criteria.drivetrains.contains(T(com.github.cartrader.entity.
-								DrivetrainType).AWD)}"/>
-								<label for="drivetrain-awd" class="form-check-label">AWD</label>
-							</div>
-						</fieldset>
-					</div>
-					<div class="col-4">
-						<fieldset class="form-group">
-							<legend>Σασμάν</legend>
-							<div class="form-check">
-								<input id="drivetrain-fwd" name="drivetrain" type="checkbox" value="FWD" class="form-check-input" th:checked="${criteria.drivetrains.contains(T(com.github.cartrader.entity.
-								DrivetrainType).FWD)}"/>
-								<label for="drivetrain-fwd" class="form-check-label">Αυτόματο</label>
-							</div>
-							<div class="form-check">
-								<input id="drivetrain-rwd" name="drivetrain" type="checkbox" value="RWD" class="form-check-input" th:checked="${criteria.drivetrains.contains(T(com.github.cartrader.entity.
-								DrivetrainType).RWD)}"/>
-								<label for="drivetrain-rwd" class="form-check-label">Ημιαυτόματο</label>
-							</div>
-							<div class="form-check">
-								<input id="drivetrain-awd" name="drivetrain" type="checkbox" value="AWD" class="form-check-input" th:checked="${criteria.drivetrains.contains(T(com.github.cartrader.entity.
-								DrivetrainType).AWD)}"/>
-								<label for="drivetrain-awd" class="form-check-label">Χειροκίνητο</label>
+							  	<input class="form-check-input" type="checkbox" name="sellerType" value="DEALER">
+							  	<label class="form-check-label" for="sellerType">Έμπορος</label>
 							</div>
 						</fieldset>
 					</div>
 				</div>
-				<fieldset class="form-group">
-					<legend>Χαρακτηριστικά</legend>
-					<div id="features" class="list-group-flush">
-						<script>
-							initFeaturesFilter();
-						</script>
+				<div class="form-row">
+					<div class="col-6">
+						<fieldset class="form-group">
+							<legend>Προδιαγραφές</legend>
+							<div class="list-group-flush">
+								<div class="list-group-item">
+									<a data-toggle="collapse" href="#fuel-collapse" aria-expanded="false" aria-controls="fuel-collapse">
+									   Καύσιμο
+									</a>
+									<div id="fuel-collapse" class="collapse">
+										<div class="form-check-inline">
+											<input id="gasoline" name="fuelType" type="checkbox" th:value="GASOLINE" class="form-check-input" th:checked="${criteria.fuelTypes.contains(T(com.github.cartrader.entity.
+											FuelType).GASOLINE)}"/>
+											<label for="gasoline" class="form-check-label">Βενζίνη</label>
+										</div>
+										<div class="form-check-inline">
+											<input id="diesel" name="fuelType" type="checkbox" th:value="DIESEL" class="form-check-input" th:checked="${criteria.fuelTypes.contains(T(com.github.cartrader.entity.
+											FuelType).DIESEL)}"/>
+											<label for="diesel" class="form-check-label">Πετρέλαιο</label>
+										</div>
+										<div class="form-check-inline">
+											<input id="cng" name="fuelType" type="checkbox" th:value="COMPRESSED_NATURAL_GAS" class="form-check-input" th:checked="${criteria.fuelTypes.contains(T(com.github.cartrader.entity.
+											FuelType).COMPRESSED_NATURAL_GAS)}"/>
+											<label for="cng" class="form-check-label">Φυσικό αέριο(CNG)</label>
+										</div>
+										<div class="form-check-inline">
+											<input id="electric" name="fuelType" type="checkbox" th:value="ELECTRIC" class="form-check-input" th:checked="${criteria.fuelTypes.contains(T(com.github.cartrader.entity.
+											FuelType).ELECTRIC)}"/>
+											<label for="electric" class="form-check-label">Ηλεκτρικό</label>
+										</div>
+										<div class="form-check-inline">
+											<input id="other" name="fuelType" type="checkbox" th:value="OTHER" class="form-check-input" th:checked="${criteria.fuelTypes.contains(T(com.github.cartrader.entity.
+											FuelType).OTHER)}"/>
+											<label for="other" class="form-check-label">Άλλο</label>
+										</div>
+									</div>
+								</div>
+								<div class="list-group-item">
+									<a data-toggle="collapse" href="#engineSize-collapse" aria-expanded="false" aria-controls="engineSize-collapse">
+									   Κυβικά
+									</a>
+									<div id="engineSize-collapse" class="collapse">
+										<div class="form-row">
+											<div class="col">
+												<select name="engineSizeMin" class="form-control">
+											        <option disabled selected>Από</option>
+											        <option value="0" th:selected="${criteria.engineSizeMin eq 0}">0cc</option>
+											        <option value="500" th:selected="${criteria.engineSizeMin eq 500}">500cc</option>
+											        <option value="1000" th:selected="${criteria.engineSizeMin eq 1000}">1000cc</option>
+											        <option value="1500" th:selected="${criteria.engineSizeMin eq 1500}">1500cc</option>
+											        <option value="2000" th:selected="${criteria.engineSizeMin eq 2000}">2000cc</option>
+											        <option value="2500" th:selected="${criteria.engineSizeMin eq 2500}">2500cc</option>
+											        <option value="3000" th:selected="${criteria.engineSizeMin eq 3000}">3000cc</option>
+											        <option value="3500" th:selected="${criteria.engineSizeMin eq 3500}">3500cc</option>
+											        <option value="4000" th:selected="${criteria.engineSizeMin eq 4000}">4000cc</option>
+											    </select>
+											</div>
+											<div class="col">
+												<select name="engineSizeMax" class="form-control">
+											        <option disabled selected>Έως</option>
+											        <option value="500" th:selected="${criteria.engineSizeMax eq 500}">500cc</option>
+											        <option value="1000" th:selected="${criteria.engineSizeMax eq 1000}">1000cc</option>
+											        <option value="1500" th:selected="${criteria.engineSizeMax eq 1500}">1500cc</option>
+											        <option value="2000" th:selected="${criteria.engineSizeMax eq 2000}">2000cc</option>
+											        <option value="2500" th:selected="${criteria.engineSizeMax eq 2500}">2500cc</option>
+											        <option value="3000" th:selected="${criteria.engineSizeMax eq 3000}">3000cc</option>
+											        <option value="3500" th:selected="${criteria.engineSizeMax eq 3500}">3500cc</option>
+											        <option value="4000" th:selected="${criteria.engineSizeMax eq 4000}">4000cc</option>
+											    </select>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="list-group-item">
+									<a data-toggle="collapse" href="#transmission-collapse" aria-expanded="false" aria-controls="transmission-collapse">
+									   Σασμάν
+									</a>
+									<div id="transmission-collapse" class="collapse">
+										<!-- Fix enum -->
+										<div class="form-check">
+											<input id="drivetrain-fwd" name="drivetrain" type="checkbox" value="FWD" class="form-check-input" th:checked="${criteria.drivetrains.contains(T(com.github.cartrader.entity.
+											DrivetrainType).FWD)}"/>
+											<label for="drivetrain-fwd" class="form-check-label">Αυτόματο</label>
+										</div>
+										<div class="form-check">
+											<input id="drivetrain-rwd" name="drivetrain" type="checkbox" value="RWD" class="form-check-input" th:checked="${criteria.drivetrains.contains(T(com.github.cartrader.entity.
+											DrivetrainType).RWD)}"/>
+											<label for="drivetrain-rwd" class="form-check-label">Ημιαυτόματο</label>
+										</div>
+										<div class="form-check">
+											<input id="drivetrain-awd" name="drivetrain" type="checkbox" value="AWD" class="form-check-input" th:checked="${criteria.drivetrains.contains(T(com.github.cartrader.entity.
+											DrivetrainType).AWD)}"/>
+											<label for="drivetrain-awd" class="form-check-label">Χειροκίνητο</label>
+										</div>
+									</div>
+								</div>
+								<div class="list-group-item">
+									<a data-toggle="collapse" href="#drivetrain-collapse" aria-expanded="false" aria-controls="drivetrain-collapse">
+									   Κίνηση
+									</a>
+									<div id="drivetrain-collapse" class="collapse">
+										<div class="form-check">
+											<input id="drivetrain-fwd" name="drivetrain" type="checkbox" value="FWD" class="form-check-input" th:checked="${criteria.drivetrains.contains(T(com.github.cartrader.entity.
+											DrivetrainType).FWD)}"/>
+											<label for="drivetrain-fwd" class="form-check-label">FWD</label>
+										</div>
+										<div class="form-check">
+											<input id="drivetrain-rwd" name="drivetrain" type="checkbox" value="RWD" class="form-check-input" th:checked="${criteria.drivetrains.contains(T(com.github.cartrader.entity.
+											DrivetrainType).RWD)}"/>
+											<label for="drivetrain-rwd" class="form-check-label">RWD</label>
+										</div>
+										<div class="form-check">
+											<input id="drivetrain-awd" name="drivetrain" type="checkbox" value="AWD" class="form-check-input" th:checked="${criteria.drivetrains.contains(T(com.github.cartrader.entity.
+											DrivetrainType).AWD)}"/>
+											<label for="drivetrain-awd" class="form-check-label">AWD</label>
+										</div>
+									</div>
+								</div>
+								<div class="list-group-item">
+									<a data-toggle="collapse" href="#doors-collapse" aria-expanded="false" aria-controls="doors-collapse">
+									   Πόρτες
+									</a>
+									<div id="doors-collapse" class="collapse">
+									</div>
+								</div>
+								<div class="list-group-item">
+									<a data-toggle="collapse" href="#exteriorcolor-collapse" aria-expanded="false" aria-controls="exteriorcolor-collapse" th:text="									   #{exteriorColor}"></a>
+									<div id="exteriorcolor-collapse" class="collapse" th:each="color: ${T(com.github.cartrader.entity.ExteriorColor).values()}">
+										<th:block th:text="#{${color}}">
+									</div>
+								</div>
+								<div class="list-group-item">
+									<a data-toggle="collapse" href="#interiorcolor-collapse" aria-expanded="false" aria-controls="interior-collapse" th:text="									   #{interiorColor}"></a>
+									<div id="interior-collapse" class="collapse">
+									</div>
+								</div>
+							</div>
+						</fieldset>
 					</div>
-				</fieldset>
+				</div>
+				<div class="form-row">
+					<div class="col-6">
+						<fieldset class="form-group">
+							<legend>Χαρακτηριστικά</legend>
+							<div id="features" class="list-group-flush">
+								<script>
+									initFeaturesFilter();
+								</script>
+							</div>
+						</fieldset>
+					</div>
+				</div>
 			  	<button class="btn btn-primary" type="submit">Αναζήτησε</button>
 			</form>
 		</div>

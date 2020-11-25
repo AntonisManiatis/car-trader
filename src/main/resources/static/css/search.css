@@ -1,0 +1,13 @@
+@import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
+
+.list-group-item > a:after {
+	content: "\f107";
+	color: #333;
+	right: 0px;
+	position: absolute;
+    font-family: "FontAwesome"
+}
+
+.list-group-item > a[aria-expanded="true"]:after {
+	content: "\f106";
+}

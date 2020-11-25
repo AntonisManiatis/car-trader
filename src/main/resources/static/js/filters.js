@@ -92,7 +92,7 @@ function initFeaturesFilter() {
 
 	let item = (feature) => `
 		<div id="${feature.type}" class="list-group-item">
-			<a data-toggle="collapse" href="#${feature.type}-collapse" aria-expanded="true" aria-controls="${feature.type}-collapse">
+			<a data-toggle="collapse" href="#${feature.type}-collapse" aria-expanded="false" aria-controls="${feature.type}-collapse">
 			   ${translations.get(feature.type)}
 			</a>
 			<div class="collapse" id="${feature.type}-collapse"></div>
