@@ -1,7 +1,5 @@
-@charset "ISO-8859-1";
-
 .jumbotron {
-	background-image: url(porsche_gt.png);
+	background-image: url(/porsche_gt.png);
    -webkit-background-size: cover;
    -moz-background-size: cover;
    background-size: cover;

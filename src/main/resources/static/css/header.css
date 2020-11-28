@@ -1,0 +1,9 @@
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover {
+	border: 0;
+}
+
+@media (min-width: 576px) {
+	#login-modal {
+	    max-width: 400px;
+	}
+}
