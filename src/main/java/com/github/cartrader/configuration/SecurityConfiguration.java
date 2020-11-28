@@ -1,4 +1,4 @@
-package com.github.cartrader;
+package com.github.cartrader.configuration;
 
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;

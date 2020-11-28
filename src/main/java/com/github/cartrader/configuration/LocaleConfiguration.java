@@ -1,4 +1,4 @@
-package com.github.cartrader;
+package com.github.cartrader.configuration;
 
 import java.util.Locale;
 
