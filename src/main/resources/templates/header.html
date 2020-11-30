@@ -77,7 +77,7 @@
 															<label for="username" th:text="#{username}"></label>
 															<div class="input-group mb-3">
 																<div class="input-group-prepend">
-															    	<span class="input-group-text bg-white" id="basic-addon1"><i class="fa fa-user-circle"></i></span>									  
+															    	<span class="input-group-text bg-white" id="basic-addon1"><i class="fa fa-envelope"></i></span>									  
 															 	</div>
 															 	<input th:classappend="${param.error} ? 'is-invalid'" class="form-control" type="text" name="username" id="username" th:placeholder="#{usernamePlaceholder}" required>
 															</div>
@@ -100,7 +100,42 @@
 													</form>
 											  	</div>
 											  	<div class="tab-pane fade" id="register" role="tabpanel" aria-labelledby="profile-tab">
-											  		
+											  		<div th:if="${success}" class="alert alert-success mt-3" role="alert" th:text="#{login.error}"></div>
+													<form th:action="@{/signup}" th:object="${signupForm}" method="POST">
+														<div class="form-group form-group-lg">
+															<label for="username" th:text="#{username}"></label>
+															<div class="input-group mb-3">
+																<div class="input-group-prepend">
+															    	<span class="input-group-text bg-white" id="basic-addon1"><i class="fa fa-envelope"></i></span>		  
+															 	</div>
+															 	<input th:field="*{email}" th:classappend="${#fields.hasErrors('email')} ? 'is-invalid'" class="form-control" type="text" th:placeholder="#{usernamePlaceholder}" required>
+															 	<div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="invalid-feedback"></div>
+															</div>
+														</div>
+														<div class="form-group form-group-lg">
+															<label for="password" th:text="#{password}"></label>
+															<div class="input-group mb-3">
+																<div class="input-group-prepend">
+															    	<span class="input-group-text bg-white" id="basic-addon1"><i class="fa fa-lock"></i></span>									  
+															 	</div>
+																<input th:field="*{password}" th:classappend="${#fields.hasErrors('password')} ? 'is-invalid'" class="form-control" type="password" th:placeholder="#{passwordPlaceholder}" required>
+																<div th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="invalid-feedback"></div>
+															</div>
+														</div>
+														<div class="form-group form-group-lg">
+															<label for="confirmPassword" th:text="#{password}"></label>
+															<div class="input-group mb-3">
+																<div class="input-group-prepend">
+															    	<span class="input-group-text bg-white" id="basic-addon1"><i class="fa fa-lock"></i></span>	  
+															 	</div>
+																<input th:field="*{confirmPassword}" th:classappend="${#fields.hasErrors('confirmPassword')} ? 'is-invalid'" class="form-control" type="password" th:placeholder="#{passwordPlaceholder}" required>
+																<div th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}" class="invalid-feedback"></div>
+															</div>
+														</div>
+														<div class="form-group form-group-lg">
+															<button class="btn btn-lg btn-primary" style="width: 100%" type="submit" th:text="#{register}"></button>
+														</div>
+													</form>
 											  	</div>
 											</div>
 							        	</div>
@@ -121,11 +156,20 @@
 				    	</li>
 				    </ul>
 					<script th:inline="javascript">
-					    /*<![CDATA[*/			    
+						// Hacky solution but hey it works
+
+					    /*<![CDATA[*/
+					    let success = /*[[${success}]]*/ false;
+					    let signupFailure = /*[[${#fields.hasErrors('${signupForm.*}')}]]*/ false;
 					    let error = /*[[${param.error}]]*/ false;
-					    if (error) {
-					    	$('#exampleModal').modal('show');
-						}
+					    $(() => {
+						    if (error || success || signupFailure) {
+						    	$('#exampleModal').modal('show');
+						    	if (success || signupFailure) {
+									$('.nav-tabs a[href="#register"]').tab('show');
+						    	}
+							}
+						});
 					 	/*]]>*/
 					</script> 
 					<script>

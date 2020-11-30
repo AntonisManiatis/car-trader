@@ -1,13 +1,26 @@
 package com.github.cartrader.configuration;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+	private final UserDetailsService userDetailsService;
+	private final PasswordEncoder encoder;
+	
 	private final RedirectBackOnAuthentication handler = new RedirectBackOnAuthentication();
+	
+	@Autowired
+	public SecurityConfiguration(UserDetailsService userDetailsService, 
+			PasswordEncoder encoder) {
+		this.userDetailsService = userDetailsService;
+		this.encoder = encoder;
+	}
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
@@ -28,6 +41,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth.inMemoryAuthentication().withUser("Not_Reflections").password("{noop}1234").roles("USER");
+		auth.userDetailsService(userDetailsService)
+			.passwordEncoder(encoder);
 	}
 }
