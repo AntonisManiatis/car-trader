@@ -13,6 +13,31 @@
 		<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
     	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
     	<th:block th:insert="header"/>
+		<script th:inline="javascript">
+		    let authenticated = /*[[${#authorization.expression('isAuthenticated()')}]]*/ false;
+		    $(() => {
+			    if (!authenticated) {
+			    	$('#exampleModal').modal('show');
+				}
+			});
+		</script> 
+    	<div class="container">
+    		<div class="alert alert-warning" role="alert" sec:authorize="!isAuthenticated()">
+				You will have to login to submit an ad!
+			</div>
+    		<form th:action="@{/ads/submit}" th:object="${adSubmission}" method="post">
+    			<div class="form-group">
+				    <label for="condition" th:text="#{condition}"></label>
+				    <select id="condition" class="form-control" th:classappend="${#fields.hasErrors('condition')} ? 'is-invalid'" th:field="*{condition}">
+				    	<option value=""></option>
+				      	<option value="NEW" th:text="#{new}"></option>
+				      	<option value="USED" th:text="#{used}"></option>
+				    </select>
+					<div th:if="${#fields.hasErrors('condition')}" th:errors="*{condition}" class="invalid-feedback"></div>
+			  	</div>
+			  	<button class="btn btn-primary" type="submit">Καταχώρηση</button>
+    		</form>
+    	</div>
     	<th:block th:insert="footer"/>
     </body>
 </html>

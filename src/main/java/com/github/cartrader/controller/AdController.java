@@ -1,16 +1,24 @@
 package com.github.cartrader.controller;
 
-import java.security.Principal;
+import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.github.cartrader.configuration.CurrentTrader;
+import com.github.cartrader.entity.Ad;
+import com.github.cartrader.entity.Car;
+import com.github.cartrader.entity.EngineDetails;
+import com.github.cartrader.entity.Trader;
+import com.github.cartrader.model.AdSubmission;
 import com.github.cartrader.model.Criteria;
 import com.github.cartrader.service.AdService;
 import com.github.cartrader.util.PagePartitioner;
@@ -58,8 +66,31 @@ public class AdController {
 		return new ModelAndView("search").addObject(criteria);
 	}
 	
-	@GetMapping("/ads/create")
-	public ModelAndView create(Principal principal) {
-		return new ModelAndView(principal != null ? "create" : "register");
+	@GetMapping("/ads/submit")
+	public ModelAndView create(AdSubmission adSubmission) {
+		// TODO: Maybe redirect unauthorized users to login
+		return new ModelAndView("create");
+	}
+	
+	@PostMapping("/ads/submit")
+	public String submit(@Valid AdSubmission submission, BindingResult result,
+			@CurrentTrader Trader trader) {
+		if (result.hasErrors()) {
+			LOGGER.debug("Result errors {}", result);
+			return "create";
+		}
+		
+		// This is used for testing purposes right now, we'll keep adjusting it once the submission 
+		// form is complete.
+		var ad = new Ad();
+		// TODO: Fix the defaults in JPA annotations.
+		var car = new Car();
+		car.setEngineDetails(new EngineDetails());
+		ad.setCar(car);
+		ad.setTrader(trader);
+		
+		LOGGER.debug("Current Trader is: {}", trader.getId());
+		var saved = adService.save(ad);
+		return "redirect:/ads/" + saved.getId();
 	}
 }

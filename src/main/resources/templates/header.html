@@ -22,8 +22,8 @@
 					    <li class="nav-item" th:classappend="${#request.requestURI eq '/ads/search'} ? active">
 					    	<a class="nav-link" th:href="@{/ads/search}" th:text="#{search}"></a>
 					    </li>
-					    <li class="nav-item" th:classappend="${#request.requestURI eq '/ads/create'} ? active">
-					        <a class="nav-link" th:href="@{/ads/create}" th:text="#{submit}"></a>
+					    <li class="nav-item" th:classappend="${#request.requestURI eq '/ads/submit'} ? active">
+					        <a class="nav-link" th:href="@{/ads/submit}" th:text="#{submit}"></a>
 					    </li>
 					    <li class="nav-item" th:classappend="${#request.requestURI eq '/info'} ? active">
 					        <a class="nav-link disabled" href="@{/info}" th:text="#{info}"></a>

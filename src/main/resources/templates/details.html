@@ -82,9 +82,9 @@
 							    </ul>
 							</div>
 						</div>
-						<div class="card mt-2" th:if="${ad.seller != null}">
+						<div class="card mt-2" th:if="${ad.trader != null}">
 							<div class="card-header">
-								<th:block th:switch="${ad.seller.sellerType}">
+								<th:block th:switch="${ad.trader.sellerType}">
 									<div th:case="${T(com.github.cartrader.entity.SellerType).UNDEFINED}" th:text="Άγνωστο">
 										
 									</div>
@@ -96,7 +96,7 @@
 									</div>
 								</th:block>
 							</div>
-							<div class="card-body" th:with="contactInfo=${ad.seller?.contactInfo}">
+							<div class="card-body" th:with="contactInfo=${ad.trader?.contactInfo}">
 								<div th:text="${contactInfo?.country}"></div>
 								<div th:each="telephone: ${contactInfo?.telephones}" th:text="${telephone}"></div>
 							</div>
