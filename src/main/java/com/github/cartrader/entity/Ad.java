@@ -31,7 +31,7 @@ public class Ad {
 	@ElementCollection
 	private List<PictureId> pictures = List.of();
 	@ManyToOne
-	private Seller seller;
+	private Trader trader;
 	
 	/**
 	 * Usually currency is represented as a {@link BigDecimal} but for
@@ -95,11 +95,11 @@ public class Ad {
 		this.pictures = pictures;
 	}
 
-	public Seller getSeller() {
-		return seller;
+	public Trader getTrader() {
+		return trader;
 	}
 
-	public void setSeller(Seller seller) {
-		this.seller = seller;
+	public void setTrader(Trader trader) {
+		this.trader = trader;
 	}
 }

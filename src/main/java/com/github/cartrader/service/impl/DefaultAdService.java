@@ -30,4 +30,9 @@ public final class DefaultAdService implements AdService {
 	public Optional<Ad> findById(long id) {
 		return repository.findById(id);
 	}
+	
+	@Override
+	public Ad save(Ad ad) {
+		return repository.save(ad);
+	}
 }

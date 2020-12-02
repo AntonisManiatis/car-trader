@@ -1,18 +1,17 @@
 package com.github.cartrader.service.impl;
 
-import java.util.Collection;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import org.springframework.util.Assert;
 
 import com.github.cartrader.entity.Account;
+import com.github.cartrader.entity.Trader;
 import com.github.cartrader.service.AccountService;
 
 @Service
@@ -29,54 +28,21 @@ public final class DefaultUserDetailsService implements UserDetailsService {
 		var account = accountService.findByEmail(username)
 				.orElseThrow(() -> new UsernameNotFoundException("Account with email " + username + " was not found."));
 		
-		return new Adapter(account);
+		return new AccountUserDetails(account);
 	}
 	
-	/**
-	 * Adapts our {@link Account} entity to Spring's {@link UserDetails}
-	 * @author Anthony
-	 */
-	private class Adapter implements UserDetails {
-		private final Account account;
+	public class AccountUserDetails extends User {
+		private final Trader trader;
 		
-		public Adapter(Account account) {
-			Assert.notNull(account, () -> "Account cannot be null.");
-			this.account = account;
+		public AccountUserDetails(Account account) {
+			// As of right now we don't require any roles so everyone is a ROLE_USER
+			super(account.getEmail(), account.getPasssword(), Set.of(new SimpleGrantedAuthority("ROLE_USER")));
+			
+			this.trader = account.getTrader();
 		}
 		
-		@Override
-		public Collection<? extends GrantedAuthority> getAuthorities() {
-			return Set.of(new SimpleGrantedAuthority("ROLE_USER"));
+		public Trader getTrader() {
+			return trader;
 		}
-
-		@Override
-		public String getPassword() {
-			return account.getPasssword();
-		}
-
-		@Override
-		public String getUsername() {
-			return account.getEmail();
-		}
-
-		@Override
-		public boolean isAccountNonExpired() {
-			return true;
-		}
-
-		@Override
-		public boolean isAccountNonLocked() {
-			return true;
-		}
-
-		@Override
-		public boolean isCredentialsNonExpired() {
-			return true;
-		}
-
-		@Override
-		public boolean isEnabled() {
-			return true;
-		}	
 	}
 }

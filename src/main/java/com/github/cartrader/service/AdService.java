@@ -14,4 +14,6 @@ public interface AdService {
 	Page<Ad> findAll(@Nullable Specification<Ad> spec, Pageable pageable);
 	
 	Optional<Ad> findById(long id);
+	
+	Ad save(Ad ad);
 }

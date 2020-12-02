@@ -9,15 +9,14 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 /**
- * TODO Maybe naming this class User is better?
  * @author Anthony
  */
 @Entity
-public class Seller {
+public class Trader {
 	@Id
 	@GeneratedValue
 	private long id;
-	// TODO: Username of the seller?
+	
 	private SellerType sellerType = SellerType.UNDEFINED;
 	@Embedded
 	private ContactInfo contactInfo;
