@@ -18,7 +18,11 @@ public final class StringToCategoryConverter implements Converter<String, Catego
 	
 	@Override
 	public Category convert(String source) {
-		var categoryId = Integer.parseInt(source);
-		return categoryService.findById(categoryId).orElse(null);
+		try {
+			var categoryId = Integer.parseInt(source);
+			return categoryService.findById(categoryId).orElse(null);
+		} catch (NumberFormatException e) {
+			return null;
+		}
 	}
 }

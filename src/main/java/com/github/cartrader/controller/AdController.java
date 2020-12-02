@@ -80,11 +80,17 @@ public class AdController {
 			return "create";
 		}
 		
+		LOGGER.debug("Submission is: {}", submission);
+		
 		// This is used for testing purposes right now, we'll keep adjusting it once the submission 
 		// form is complete.
 		var ad = new Ad();
+		ad.setPurpose(submission.getPurpose());
 		// TODO: Fix the defaults in JPA annotations.
 		var car = new Car();
+		car.setCarCondition(submission.getCondition());
+		car.setCategory(submission.getCategory());
+		car.setFeatures(submission.getFeatures());
 		car.setEngineDetails(new EngineDetails());
 		ad.setCar(car);
 		ad.setTrader(trader);

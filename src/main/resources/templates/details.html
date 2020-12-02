@@ -61,7 +61,7 @@
 							    	</tr>
 							    	<tr>
 							    		<th scope="row">Κατηγορία</th>
-							    		<td th:text="${car.category.title}"></td>
+							    		<td th:text="${car.category} ? ${car.category.title} :'no category'"></td>
 							    	</tr>
 							    </table>
 							</div>
