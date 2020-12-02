@@ -19,7 +19,7 @@ public class Ad {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
-	private String title;
+	private String title = "";
 	private AdPurpose purpose = AdPurpose.UNDEFINED;
 	
 	@CreationTimestamp

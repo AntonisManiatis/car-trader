@@ -6,7 +6,7 @@ import java.util.Set;
 import javax.persistence.Embeddable;
 import javax.persistence.Embedded;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 
 @Embeddable
@@ -31,7 +31,7 @@ public class Car {
 	private LocalDate modelYear;
 	private int mileage;
 	
-	@OneToMany
+	@ManyToMany
 	private Set<Feature> features = Set.of();
 	
 	private int doors;

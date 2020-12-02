@@ -2,6 +2,7 @@ package com.github.cartrader.entity;
 
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -20,7 +21,7 @@ public class Make {
 	private int id;
 	private String name;
 	
-	@OneToMany
+	@OneToMany(cascade = CascadeType.ALL)
 	private Set<Model> models = Set.of();
 	
 	public int getId() {
