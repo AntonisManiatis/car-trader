@@ -2,6 +2,7 @@ package com.github.cartrader.entity;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,7 +21,8 @@ public class Trader {
 	private SellerType sellerType = SellerType.UNDEFINED;
 	@Embedded
 	private ContactInfo contactInfo;
-	@OneToMany
+	
+	@OneToMany(mappedBy = "trader", cascade = CascadeType.ALL)
 	private List<Ad> ads = List.of();
 
 	public long getId() {
@@ -49,6 +51,11 @@ public class Trader {
 
 	public List<Ad> getAds() {
 		return ads;
+	}
+	
+	public void addAd(Ad ad) {
+		ad.setTrader(this);
+		this.ads.add(ad);
 	}
 
 	public void setAds(List<Ad> ads) {

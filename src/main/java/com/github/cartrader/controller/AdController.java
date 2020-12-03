@@ -93,7 +93,8 @@ public class AdController {
 		car.setFeatures(submission.getFeatures());
 		car.setEngineDetails(new EngineDetails());
 		ad.setCar(car);
-		ad.setTrader(trader);
+
+		trader.addAd(ad);
 		
 		LOGGER.debug("Current Trader is: {}", trader.getId());
 		var saved = adService.save(ad);
