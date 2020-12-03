@@ -148,6 +148,9 @@
 				    			<span class="fa fa-user-circle"></span> <span sec:authentication="name">Bob</span>
 				    		</a>
 				    		<div class="dropdown-menu" aria-labelledby="loginDropdown">
+				    			<a class="dropdown-item" th:href="@{/account}" th:text="#{myaccount}"></a>
+				    			<a class="dropdown-item" th:href="@{/account/ads}" th:text="#{myads}"></a>
+				    			<div class="dropdown-divider"></div>
 				    			<form th:action="@{/logout}" method="POST">
 				    				<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
 				    				<button class="dropdown-item" type="submit">Logout</button>

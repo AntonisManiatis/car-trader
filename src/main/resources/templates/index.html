@@ -5,7 +5,7 @@
 	    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 		<link rel="stylesheet" th:href="@{/css/index.css}">
-		<title>Μεταχειρισμένα & Καινούρια Αυτοκίνητα - CarTrader.gr</title>
+		<title th:text="#{index.title}"></title>
 	</head>
 	<body>
 		<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
@@ -20,6 +20,7 @@
 			</div>
 		</div>
 		<div class="container">
+			<!-- TODO Fix this template when there are no ads to display -->
 			<h2>Τεράστια γκάμα αυτοκινήτων</h2>
 			<p class="lead">Αναζήτησε ανάμεσα σε <th:block th:text="${page.getTotalElements()}"></th:block> αγγελίες.</p>
 			<div id="ads" class="carousel slide" data-ride="carousel">
@@ -107,7 +108,7 @@
 				<div class="col-md-6">
 					<h2>Θές να πουλήσεις το αυτοκίνητο σου;</h2>
 					<p class="lead">Καταχώρησε αγγελία εύκολα, γρήγορα και δωρεάν!</p>
-					<a class="btn btn-lg btn-outline-primary" th:href="@{/ads/create}">Καταχώρηση αγγελίας</a>
+					<a class="btn btn-lg btn-outline-primary" th:href="@{/ads/submit}">Καταχώρηση αγγελίας</a>
 				</div>
 				<div class="col-md-6">
 					<img class="img-fluid rounded" th:src="@{/exchange.jpg}"/>
