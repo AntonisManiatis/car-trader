@@ -10,4 +10,6 @@ public interface AccountService {
 	boolean exists(String email);
 	
 	Account create(Account account);
+	
+	void deleteByEmail(String email);
 }

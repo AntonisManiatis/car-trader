@@ -12,24 +12,30 @@
     	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
     	<th:block th:insert="header"/>
     	<div class="container">
-    		<h1>My ads</h1>
-    		<ul class="nav nav-pills">
-			 	<li class="nav-item">
-			    	<a class="nav-link" href="@{/account}">Active</a>
-			  	</li>
-			  	<li class="nav-item">
-			    	<a class="nav-link active" th:href="@{/account/ads}">Link</a>
-			  	</li>
-			</ul>
-			<div class="shadow p-3 mb-5 bg-white rounded">
-				<div th:if="${ads.empty}">
-					<h3>no ads</h3>
-					<a class="btn btn-primary" role="button" th:href="@{/ads/submit}" th:text="#{submit}"></a>
-				</div>
-				<ul class="list-group" th:unless="${ads.empty}" th:each="ad: ${ads}">
-				  	<li class="list-group-item" th:text="${ad.car.condition}"></li>
+    		<section>
+	    		<h1 class="mt-4" th:text="#{myaccount}"></h1>
+	    		<ul class="nav nav-pills py-3">
+				 	<li class="nav-item">
+				    	<a class="nav-link" th:href="@{/account}" th:text="#{account}"></a>
+				  	</li>
+				  	<li class="nav-item">
+				    	<a class="nav-link active" th:href="@{/account/ads}" th:text="#{ads}"></a>
+				  	</li>
 				</ul>
-			</div>
+			</section>
+			<section>
+				<div class="shadow p-3 mb-5 bg-white rounded">
+					<h3 th:text="#{myads}"></h3>
+					<p class="text-muted">Όλες οι αγγελίες σου</p>
+					<div th:if="${ads.empty}">
+						<h3>no ads</h3>
+						<a class="btn btn-primary" role="button" th:href="@{/ads/submit}" th:text="#{submit}"></a>
+					</div>
+					<ul class="list-group" th:unless="${ads.empty}" th:each="ad: ${ads}">
+					  	<li class="list-group-item" th:text="${ad.car.condition}"></li>
+					</ul>
+				</div>
+			</section>			
     	</div>
     	<th:block th:insert="footer"/>
 	</body>

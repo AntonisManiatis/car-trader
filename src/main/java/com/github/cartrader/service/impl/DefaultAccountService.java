@@ -37,4 +37,9 @@ public final class DefaultAccountService implements AccountService {
 		account.setPasssword(encoder.encode(account.getPasssword()));
 		return accountRepository.save(account);
 	}
+	
+	@Override
+	public void deleteByEmail(String email) {
+		this.accountRepository.deleteById(email);
+	}
 }
