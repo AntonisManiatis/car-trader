@@ -14,7 +14,7 @@ public class ContactInfo {
 	private String country;
 	private String address;
 	@ElementCollection
-	private List<String> telephones = List.of();
+	private List<String> telephones;
 	
 	public String getCountry() {
 		return country;

@@ -18,9 +18,11 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.github.cartrader.configuration.CurrentTrader;
+import com.github.cartrader.entity.ContactInfo;
 import com.github.cartrader.entity.Trader;
 import com.github.cartrader.model.TraderDetails;
 import com.github.cartrader.service.AccountService;
+import com.github.cartrader.service.TraderService;
 
 /**
  * 
@@ -33,10 +35,13 @@ public class AccountController {
 			LoggerFactory.getLogger(AccountController.class);
 	
 	private final AccountService accountService;
+	private final TraderService traderService;
 	
 	@Autowired
-	public AccountController(AccountService accountService) {
+	public AccountController(AccountService accountService, 
+			TraderService traderService) {
 		this.accountService = accountService;
+		this.traderService = traderService;
 	}
 	
 	@GetMapping
@@ -44,6 +49,12 @@ public class AccountController {
 			TraderDetails traderDetails) {
 		traderDetails.setFirstName(trader.getFirstName());
 		traderDetails.setLastName(trader.getLastname());
+		var contactInfo = trader.getContactInfo();
+		
+		traderDetails.setCountry(contactInfo.getCountry());
+		traderDetails.setAddress(contactInfo.getAddress());
+		traderDetails.setTelephones(contactInfo.getTelephones());
+		LOGGER.debug("Telephones stored: {}", traderDetails.getTelephones());
 		return "account";
 	}
 	
@@ -57,6 +68,15 @@ public class AccountController {
 		
 		trader.setFirstName(traderDetails.getFirstName());
 		trader.setLastname(traderDetails.getLastName());
+		
+		var contactInfo = new ContactInfo();
+		contactInfo.setCountry(traderDetails.getCountry());
+		contactInfo.setAddress(traderDetails.getAddress());
+		LOGGER.debug("Telephones received: {}", traderDetails.getTelephones());
+		contactInfo.setTelephones(traderDetails.getTelephones());
+		
+		trader.setContactInfo(contactInfo);
+		traderService.store(trader);
 		mov.addObject("infoSaved", "infoSaved");
 		return mov;
 	}

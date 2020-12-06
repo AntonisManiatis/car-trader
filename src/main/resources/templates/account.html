@@ -45,6 +45,77 @@
 							  	</div>
 						  	</div>
 					  	</div>
+					  	<fieldset>
+					  		<legend>Στοιχεία Επικοινωνίας</legend>
+						  	<div class="form-row">
+						  		<div class="col-3">
+						  			<div class="form-group">
+									    <label for="country" th:text="#{country}"></label>
+									    <input id="country" class="form-control" th:classappend="${#fields.hasErrors('country')} ? 'is-invalid'" type="text" th:field="*{country}"/>
+										<div th:if="${#fields.hasErrors('country')}" th:errors="*{country}" class="invalid-feedback"></div>
+								  	</div>
+						  		</div>
+						  		<div class="col-3">
+						  			<div class="form-group">
+									    <label for="address" th:text="#{address}"></label>
+									    <input id="address" class="form-control" th:classappend="${#fields.hasErrors('address')} ? 'is-invalid'" type="text" th:field="*{address}"/>
+										<div th:if="${#fields.hasErrors('address')}" th:errors="*{address}" class="invalid-feedback"></div>
+								  	</div>
+						  		</div>
+						  	</div>
+						  	<div class="form-row">
+						  		<div class="col-3">
+						  			<div class="form-group">
+						  				<label for="telephones" th:text="#{contactTelephones}"></label>
+						  				<button id="add" class="btn btn-default" type="button"><i class="fa fa-plus"></i></button>
+						  				<div id="tel-fields">
+							  				<th:block th:if="*{telephones.isEmpty()}">
+							  					<input id="telephones" class="form-control" th:classappend="${#fields.hasErrors('telephones')} ? 'is-invalid'" type="text" th:field="*{telephones}">
+							  					<div th:if="${#fields.hasErrors('telephones')}" th:errors="*{telephones}" class="invalid-feedback"></div>
+							  				</th:block>
+							  				<div th:if="*{not telephones.isEmpty()}" class="input-group mb-2" th:each="telephone, iter: *{telephones}" th:id="'telephone-' + ${iter.index}">
+							  					<input id="telephones" class="form-control" th:classappend="${#fields.hasErrors('telephones[__${iter.index}__]')} ? 'is-invalid'" type="text" th:field="*{telephones[__${iter.index}__]}">
+							  					<div class="input-group-append" th:if="${iter.index} > 0">
+												    <button id="remove" class="btn btn-default" type="button" th:attr="data-telephoneindex=${iter.index}" th:onclick="remove()"><i class="fa fa-minus"></i></button>
+												</div>
+												<div th:if="${#fields.hasErrors('telephones[__${iter.index}__]')}" th:errors="*{telephones[__${iter.index}__]}" class="invalid-feedback"></div>
+							  				</div>						  				
+							  				<script th:inline="javascript">
+						  						var index = /*[[*{telephones.size()}]]*/ 0;
+						  						$('#add').on('click', () => {
+						  							$('#tel-fields').append(createInput());
+						  						});
+
+						  						function remove() {
+						  							let currentIndex = $('#remove').data('telephoneindex');
+						  							console.log(currentIndex);
+						  							$('#telephone-' + currentIndex).remove();
+						  						}
+
+						  						function createInput() {
+							  						let inputGroup = $('<div id="telephone-'+index+'" class="input-group mb-2">');
+							  						let input = $('<input id="telephones" class="form-control" type="text" name="telephones['+index+']">');
+							  						let inputGroupAppend = $('<div class="input-group-append">');
+							  						let deleteButton = $('<button id="remove" class="btn btn-default" type="button"><i class="fa fa-minus"></i></button>');
+							  						deleteButton.on('click', () => {
+							  							inputGroup.remove();
+							  						});
+
+							  						inputGroup.append(input);
+							  						inputGroupAppend.append(deleteButton);
+							  						inputGroup.append(inputGroupAppend);
+							  						index++;
+							  						return inputGroup;
+						  						}
+							  				</script>
+						  				</div>
+						  				<small id="telephoneVerification" class="form-text text-muted">
+						  					We'll send you a SMS to verify your telephone(s).
+						  				</small>
+						  			</div>
+						  		</div>
+						  	</div>
+					  	</fieldset>
 					  	<button class="btn btn-primary" type="submit" th:text="#{saveChanges}"></button>
 					</form>
 				</div>

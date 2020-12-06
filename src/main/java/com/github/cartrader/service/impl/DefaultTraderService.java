@@ -24,7 +24,7 @@ public final class DefaultTraderService implements TraderService {
 	}
 
 	@Override
-	public void store(Trader seller) {
-		sellerRepository.save(seller);
+	public void store(Trader trader) {
+		sellerRepository.save(trader);
 	}
 }

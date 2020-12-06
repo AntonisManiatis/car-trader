@@ -7,5 +7,5 @@ import com.github.cartrader.entity.Trader;
 public interface TraderService {
 	Optional<Trader> findById(long id);
 	
-	void store(Trader seller);
+	void store(Trader trader);
 }
