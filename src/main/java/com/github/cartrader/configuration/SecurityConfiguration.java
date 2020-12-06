@@ -1,6 +1,8 @@
 package com.github.cartrader.configuration;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -14,7 +16,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	private final UserDetailsService userDetailsService;
 	private final PasswordEncoder encoder;
 	
-	private final RedirectBackOnAuthentication handler = new RedirectBackOnAuthentication();
+	@Value("${cartrader.loginUrl}")
+	private String loginUrl;
 	
 	@Autowired
 	public SecurityConfiguration(UserDetailsService userDetailsService, 
@@ -25,6 +28,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
+		var handler = handler();
+		
 		http
 			.authorizeRequests()
 				.antMatchers("/", "/ads", "/ads/search").permitAll()
@@ -32,7 +37,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.antMatchers("/account/**").authenticated()
 				.and()
 			.formLogin()
-				.loginPage("/login")
+				.loginPage(loginUrl)
 				.failureHandler(handler)
 				.successHandler(handler)
 				.permitAll()
@@ -40,6 +45,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 			.logout()
 				.logoutSuccessUrl("/")
 				.permitAll();
+	}
+	
+	@Bean
+	public RedirectBackOnAuthentication handler() {
+		return new RedirectBackOnAuthentication();
 	}
 	
 	@Override

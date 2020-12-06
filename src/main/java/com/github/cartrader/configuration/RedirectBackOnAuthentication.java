@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.DefaultRedirectStrategy;
@@ -30,6 +31,9 @@ public final class RedirectBackOnAuthentication implements AuthenticationFailure
 	
 	private final RedirectStrategy redirectStrategy;
 	private final String failureUrl;
+	
+	@Value("${cartrader.loginUrl}")
+	private String loginUrl;
 	
 	public RedirectBackOnAuthentication(RedirectStrategy redirectStrategy, String failureUrl) {
 		this.redirectStrategy = redirectStrategy;
@@ -55,8 +59,22 @@ public final class RedirectBackOnAuthentication implements AuthenticationFailure
 	    
 	    try {
 			var uri = new URI(referer);
-			LOGGER.debug("Referer {}, and URI path {}", referer, uri.getPath());
-		    redirectStrategy.sendRedirect(request, response, uri.getPath());
+			var path = uri.getPath();
+			LOGGER.debug("Referer {}, and URI path {}", referer, path);
+			
+			/*
+			 * In the case that the user has been redirected to our login page (say they hit /account url)
+			 * when they successfully authenticate this handler is meant to redirect
+			 * them back to the page that they were browsing (because of the modal login)
+			 * but in the case that they will be redirected back to the login page because this is the page
+			 * they were browsing and we don't want that so if the referer path is the login page
+			 * redirect them back to the index page.
+			 */
+			if (path.equals(loginUrl)) {
+				path = "/";
+			}
+			
+		    redirectStrategy.sendRedirect(request, response, path);
 		} catch (URISyntaxException e) {
 			LOGGER.warn("{}", e);
 		}
